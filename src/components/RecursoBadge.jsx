@@ -1,7 +1,8 @@
 import { AirVent, Monitor, PenLine, Tv } from 'lucide-react'
+import { RECURSOS } from '../data/mockData.js'
 
 export const ICONES = { arCondicionado: AirVent, tv: Tv, lousa: PenLine, computador: Monitor }
-export const ROTULOS = { arCondicionado: 'Ar-Condicionado', tv: 'TV', lousa: 'Lousa', computador: 'Computador' }
+const ROTULOS = Object.fromEntries(RECURSOS.map((r) => [r.key, r.label]))
 
 export function RecursoBadge({ tipo, grande }) {
   const Icon = ICONES[tipo]
@@ -12,13 +13,7 @@ export function RecursoBadge({ tipo, grande }) {
   )
 }
 
-export const recursosDe = (sala) => Object.keys(ROTULOS).filter((k) => sala[k])
+export const recursosDe = (sala) => RECURSOS.map((r) => r.key).filter((k) => sala[k])
 
-export function Voltar({ onClick, children }) {
-  return (
-    <button onClick={onClick} className="text-sm font-semibold text-inatel hover:underline dark:text-sky-400">
-      {children}
-    </button>
-  )
-}
-
+export const ListaRecursos = ({ sala, grande }) =>
+  recursosDe(sala).map((r) => <RecursoBadge key={r} tipo={r} grande={grande} />)

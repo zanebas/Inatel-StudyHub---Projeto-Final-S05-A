@@ -6,7 +6,7 @@ import Filtro from './pages/Filtro.jsx'
 import Confirmacao from './pages/Confirmacao.jsx'
 import MinhaReserva from './pages/MinhaReserva.jsx'
 import Inicio from './pages/Inicio.jsx'
-import { Secundaria } from './pages/Outras.jsx'
+import Secundaria from './pages/Secundarias.jsx'
 
 export default function App() {
   const { autenticado, pagina } = useApp()

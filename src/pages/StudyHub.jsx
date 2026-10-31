@@ -1,69 +1,60 @@
-import { ArrowLeft, Clock, DoorOpen, Filter, Users, X } from 'lucide-react'
+import { Clock, DoorOpen, Filter, Users, X } from 'lucide-react'
 import { useApp } from '../context/AppContext.jsx'
-import { RecursoBadge, recursosDe } from '../components/RecursoBadge.jsx'
-
-export function PageHeader({ titulo, subtitulo, onVoltar, voltarLabel = 'Home' }) {
-  return (
-    <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
-      <div>
-        <h2 className="text-2xl font-extrabold sm:text-3xl">{titulo}</h2>
-        {subtitulo && <p className="text-sm text-slate-500 dark:text-slate-400">{subtitulo}</p>}
-      </div>
-      <button
-        onClick={onVoltar}
-        className="flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:hover:bg-slate-800"
-      >
-        <ArrowLeft size={16} /> {voltarLabel}
-      </button>
-    </div>
-  )
-}
+import { ListaRecursos } from '../components/RecursoBadge.jsx'
+import { Badge, Button, Card, PageHeader, Vazio } from '../components/ui.jsx'
 
 function SalaCard({ sala }) {
   const { iniciarReserva } = useApp()
   const livre = sala.status === 'Livre'
-  const recursos = recursosDe(sala)
   return (
-    <article className="flex flex-col rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:shadow-md dark:border-slate-800 dark:bg-slate-900">
+    <Card as="article" className="flex flex-col p-5 shadow-sm transition hover:shadow-md">
       <div className="flex items-start justify-between gap-2">
         <div>
           <h3 className="text-lg font-bold">{sala.nome}</h3>
           {sala.descricao && <p className="text-xs text-slate-500 dark:text-slate-400">{sala.descricao}</p>}
         </div>
         {livre ? (
-          <span className="flex items-center gap-1.5 rounded-full bg-emerald-100 px-2.5 py-1 text-xs font-bold text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-300">
+          <Badge tom="green" className="flex items-center gap-1.5 px-2.5 py-1 text-xs">
             <span className="relative flex h-2 w-2">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-75" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
             </span>
             Livre
-          </span>
+          </Badge>
         ) : (
-          <span className="rounded-full bg-red-100 px-2.5 py-1 text-xs font-bold text-red-600 dark:bg-red-500/15 dark:text-red-300">Ocupada</span>
+          <Badge tom="red" className="px-2.5 py-1 text-xs">Ocupada</Badge>
         )}
       </div>
 
-      <div className="mt-4 flex flex-wrap gap-1.5">
-        {recursos.map((r) => <RecursoBadge key={r} tipo={r} />)}
-      </div>
+      <div className="mt-4 flex flex-wrap gap-1.5"><ListaRecursos sala={sala} /></div>
       <p className="mt-4 flex items-center gap-1.5 text-sm text-slate-600 dark:text-slate-400">
         <Users size={14} /> {sala.capacidade} alunos
       </p>
 
       {livre ? (
-        <button onClick={() => iniciarReserva(sala)} className="mt-5 rounded-xl bg-inatel py-2.5 text-sm font-bold text-white transition hover:bg-inatel-dark focus:outline-none focus:ring-4 focus:ring-inatel/30">
+        <Button onClick={() => iniciarReserva(sala)} className="mt-5 py-2.5 focus:outline-none focus:ring-4 focus:ring-inatel/30">
           Reservar
-        </button>
+        </Button>
       ) : (
         <button disabled className="mt-5 flex items-center justify-center gap-1.5 rounded-xl bg-slate-100 py-2.5 text-sm font-semibold text-slate-400 dark:bg-slate-800 dark:text-slate-500">
           <Clock size={14} /> Término previsto: {sala.horarioLiberacao}
         </button>
       )}
-    </article>
+    </Card>
   )
 }
 
-/** TELA 1: Consulta de salas em tempo real */
+const Kpi = ({ icon: Icon, rotulo, valor, sufixo }) => (
+  <div className="flex items-center gap-3">
+    <Icon size={28} className="shrink-0 opacity-90" />
+    <div>
+      <p className="text-xs uppercase tracking-wide text-white/80">{rotulo}</p>
+      <p className="text-3xl font-extrabold">{valor}{sufixo && <span className="text-base font-semibold text-white/70"> {sufixo}</span>}</p>
+    </div>
+  </div>
+)
+
+/** Tela 1: consulta de salas em tempo real */
 export default function StudyHub() {
   const { setPagina, salas, salasFiltradas, totalLivres, proximaLiberacao, filtroAplicado, limparFiltro, usuario } = useApp()
   const livresNoFiltro = salasFiltradas.filter((s) => s.status === 'Livre').length
@@ -79,20 +70,8 @@ export default function StudyHub() {
       )}
 
       <section className="grid gap-4 rounded-2xl bg-gradient-to-br from-inatel to-inatel-light p-5 text-white sm:grid-cols-2">
-        <div className="flex items-center gap-3">
-          <DoorOpen size={28} className="shrink-0 opacity-90" />
-          <div>
-            <p className="text-xs uppercase tracking-wide text-white/80">Total de Salas Livres</p>
-            <p className="text-3xl font-extrabold">{totalLivres}<span className="text-base font-semibold text-white/70"> / {salas.length}</span></p>
-          </div>
-        </div>
-        <div className="flex items-center gap-3">
-          <Clock size={28} className="shrink-0 opacity-90" />
-          <div>
-            <p className="text-xs uppercase tracking-wide text-white/80">Novas Salas Disponíveis em</p>
-            <p className="text-3xl font-extrabold">{proximaLiberacao ?? '—'}{proximaLiberacao != null && <span className="text-base font-semibold text-white/70"> min</span>}</p>
-          </div>
-        </div>
+        <Kpi icon={DoorOpen} rotulo="Total de Salas Livres" valor={totalLivres} sufixo={`/ ${salas.length}`} />
+        <Kpi icon={Clock} rotulo="Novas Salas Disponíveis em" valor={proximaLiberacao ?? '—'} sufixo={proximaLiberacao != null && 'min'} />
       </section>
 
       {filtroAplicado && (
@@ -103,9 +82,7 @@ export default function StudyHub() {
       )}
 
       {salasFiltradas.length === 0 ? (
-        <p className="mt-10 rounded-2xl border border-dashed border-slate-300 p-10 text-center text-slate-500 dark:border-slate-700">
-          Nenhuma sala atende aos filtros selecionados.
-        </p>
+        <div className="mt-10"><Vazio>Nenhuma sala atende aos filtros selecionados.</Vazio></div>
       ) : (
         <section className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {salasFiltradas.map((s) => <SalaCard key={s.id} sala={s} />)}
@@ -120,4 +97,3 @@ export default function StudyHub() {
     </div>
   )
 }
-
