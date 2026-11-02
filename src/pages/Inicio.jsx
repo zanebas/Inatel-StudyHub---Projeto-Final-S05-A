@@ -45,9 +45,9 @@ export default function Inicio() {
       <BannerReserva />
 
       <header>
-        <p className="text-sm font-semibold text-inatel dark:text-sky-400">Olá, {usuario.nome} • Matrícula {usuario.matricula} • Semestre 2026/2</p>
-        <h2 className="mt-1 text-3xl font-extrabold sm:text-4xl">Reserve seu espaço de estudo no Inatel</h2>
-        <p className="text-sm font-semibold text-inatel dark:text-sky-400">Engenharia de Software • 4º Período • Matrícula {usuario.matricula} • Semestre 2026/2</p>
+        <p className="text-sm font-semibold text-inatel dark:text-sky-400">
+          Engenharia de Software • 4º Período • Matrícula {usuario.matricula} • Semestre 2026/2
+        </p>
         <h2 className="mt-1 text-3xl font-extrabold sm:text-4xl">Olá, {usuario.nome}</h2>
         <div className="mt-5 grid gap-3 md:grid-cols-3">
           {[
@@ -128,7 +128,6 @@ export default function Inicio() {
             ))}
           </ul>
         </section>
-
       </div>
     </div>
   )
