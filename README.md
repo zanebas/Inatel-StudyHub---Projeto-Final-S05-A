@@ -31,10 +31,10 @@ Tailwind css
 # Como Executar o Projeto
 
 # 1. Clone o repositório
-git clone https://github.com/zanebas/Onboarding_React.git
+git clone https://github.com/zanebas/Inatel-StudyHub---Projeto-Final-S05-A
 
 # 2. Acesse a pasta do projeto
-cd Onboarding_React
+
 
 # 3. Instale as dependências
 npm install
