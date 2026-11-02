@@ -17,16 +17,6 @@ export const fmtTempo = (ms, comHoras = true) => {
 
 export const media = (campo) => Math.round(DISCIPLINAS.reduce((a, d) => a + d[campo], 0) / DISCIPLINAS.length)
 
-export function previaHorarios(hoje = new Date()) {
-  const dia = hoje.getDay()
-  const siglas = (aulas) => aulas.map((d) => d.sigla).join(' e ')
-  for (let i = 0; i <= 7; i++) {
-    const aulas = DISCIPLINAS.filter((d) => d.dia === (dia + i) % 7)
-    if (aulas.length) return i === 0 ? `Hoje: ${siglas(aulas)} às 19:00` : `Próxima: ${aulas[0].diaLabel} · ${siglas(aulas)}`
-  }
-  return 'Sem aulas'
-}
-
 /** Relógio que atualiza a cada segundo */
 export const useAgora = () => {
   const [agora, setAgora] = useState(Date.now())

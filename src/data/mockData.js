@@ -53,3 +53,12 @@ export const PERFIL = [
   ['Matrícula', String(USUARIO.matricula)],
   ['Curso', 'Engenharia de Software – 4º período'],
 ]
+
+export const TEMPO_MEDIO_USO = '1h 30min'
+
+export const HORARIOS_BIBLIOTECA = [
+  ['Segunda a Sexta', '07:30 às 22:30'],
+  ['Sábado', '08:00 às 12:00'],
+  ['Domingo e feriados', 'Fechada'],
+  ['Tolerância para ocupar a sala', '10 minutos'],
+]

@@ -1,5 +1,6 @@
-import { Megaphone } from 'lucide-react'
-import { AVISOS, DISCIPLINAS, HORARIO_AULA, PERFIL, REGRAS } from '../data/mockData.js'
+import { LogOut, Megaphone } from 'lucide-react'
+import { useApp } from '../context/AppContext.jsx'
+import { AVISOS, DISCIPLINAS, HORARIOS_BIBLIOTECA, HORARIO_AULA, PERFIL, REGRAS } from '../data/mockData.js'
 import { media } from '../utils.js'
 import { Card } from '../components/ui.jsx'
 
@@ -20,6 +21,20 @@ const Row = ({ a, b }) => (
 const linhas = (pares) => pares.map(([a, b]) => <Row key={a} a={a} b={b} />)
 const porDisciplina = (fn) => DISCIPLINAS.map((d) => <Row key={d.cod} {...fn(d)} />)
 const titulo = (d) => `${d.cod} · ${d.nome}`
+
+function Perfil() {
+  const { logout } = useApp()
+  return (
+    <Box titulo="Perfil">
+      {linhas(PERFIL)}
+      <div className="pt-4">
+        <button onClick={logout} className="flex items-center gap-2 rounded-xl border border-slate-300 px-4 py-2.5 text-sm font-bold hover:bg-slate-50 dark:border-slate-700 dark:hover:bg-slate-800">
+          <LogOut size={16} /> Sair da conta
+        </button>
+      </div>
+    </Box>
+  )
+}
 
 const PAGINAS = {
   avisos: () => (
@@ -46,7 +61,8 @@ const PAGINAS = {
     </Box>
   ),
   regras: () => <Box titulo="Regras da Biblioteca">{linhas(REGRAS)}</Box>,
-  perfil: () => <Box titulo="Perfil">{linhas(PERFIL)}</Box>,
+  biblioteca: () => <Box titulo="Horários da Biblioteca">{linhas(HORARIOS_BIBLIOTECA)}</Box>,
+  perfil: () => <Perfil />,
 }
 
 export default function Secundaria({ id }) {

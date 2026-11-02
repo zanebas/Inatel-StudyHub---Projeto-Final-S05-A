@@ -89,7 +89,7 @@ export default function StudyHub() {
         </section>
       )}
 
-      <div className="fixed inset-x-0 bottom-0 z-20 flex justify-center bg-gradient-to-t from-slate-50 via-slate-50/90 to-transparent px-4 pb-4 pt-8 dark:from-slate-950 dark:via-slate-950/90 lg:pl-64">
+      <div className="fixed inset-x-0 bottom-16 z-20 flex justify-center md:bottom-0 bg-gradient-to-t from-slate-50 via-slate-50/90 to-transparent px-4 pb-4 pt-8 dark:from-slate-950 dark:via-slate-950/90">
         <button onClick={() => setPagina('filtro')} className="flex w-full max-w-md items-center justify-center gap-2 rounded-full bg-slate-900 px-6 py-3.5 text-sm font-bold text-white shadow-xl transition hover:bg-slate-700 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200">
           <Filter size={16} /> Filtrar por Recursos
         </button>
