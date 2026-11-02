@@ -41,3 +41,6 @@ Tailwind css
 
 4. Inicie o servidor de desenvolvimento:  
 `npm run dev`
+
+# Para visualizar
+`https://zanebas.github.io/Inatel-StudyHub---Projeto-Final-S05-A/`
