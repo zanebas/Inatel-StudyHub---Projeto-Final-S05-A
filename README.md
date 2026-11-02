@@ -30,14 +30,14 @@ Tailwind css
 
 # Como Executar o Projeto
 
- 1. Clone o repositório
-git clone https://github.com/zanebas/Inatel-StudyHub---Projeto-Final-S05-A
+1. Clone o repositório:  
+`git clone https://github.com/zanebas/Inatel-StudyHub---Projeto-Final-S05-A`
 
- 2. Acesse a pasta do projeto
-Inatel-StudyHub---Projeto-Final-S05-A
+2. Acesse a pasta do projeto:  
+`cd Inatel-StudyHub---Projeto-Final-S05-A`
 
- 4. Instale as dependências
-npm install
+3. Instale as dependências:  
+`npm install`
 
- 5. Inicie o servidor de desenvolvimento
-npm run dev
+4. Inicie o servidor de desenvolvimento:  
+`npm run dev`
