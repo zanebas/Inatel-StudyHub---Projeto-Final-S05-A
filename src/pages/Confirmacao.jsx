@@ -10,22 +10,23 @@ const Linha = ({ rotulo, children }) => (
   </div>
 )
 
-
+/** Tela 3: confirmação do agendamento */
 export default function Confirmacao() {
-  const { usuario, salaSelecionada: sala, calcularPermanencia, confirmarAgendamento, setPagina } = useApp()
+  const { usuario, salaSelecionada: sala, calcularPermanencia, reservarSala, setPagina } = useApp()
   const voltar = () => setPagina('studyhub')
   const header = <PageHeader titulo="Confirmação do Agendamento" onVoltar={voltar} voltarLabel="Voltar às salas" />
   if (!sala) return header
 
-  const { inicio, fim } = calcularPermanencia()
+  const { horarioEntrada, horarioSaida } = calcularPermanencia()
+  const tituloSala = sala.descricao ? `Sala ${sala.numero} - ${sala.descricao}` : `Sala ${sala.numero}`
   return (
     <div className="mx-auto max-w-xl">
       {header}
       <Card className="p-5 shadow-sm sm:p-6">
         <dl>
           <Linha rotulo="Aluno">{usuario.nome} (Matrícula: {usuario.matricula})</Linha>
-          <Linha rotulo="Sala Selecionada">{sala.descricao ? `${sala.nome} - ${sala.descricao}` : sala.nome}</Linha>
-          <Linha rotulo="Tempo de Permanência">{inicio} às {fim}</Linha>
+          <Linha rotulo="Sala Selecionada">{tituloSala}</Linha>
+          <Linha rotulo="Tempo de Permanência">{horarioEntrada} às {horarioSaida}</Linha>
           <Linha rotulo="Capacidade">{sala.capacidade} alunos</Linha>
         </dl>
         <div className="mt-4 rounded-xl bg-slate-50 p-4 dark:bg-slate-800/60">
@@ -37,7 +38,7 @@ export default function Confirmacao() {
 
         <div className="mt-5 flex flex-col-reverse gap-3 sm:flex-row">
           <Button variant="outline" onClick={voltar} className="flex-1 py-3">Cancelar / Voltar</Button>
-          <Button onClick={confirmarAgendamento} className="flex flex-1 items-center justify-center gap-2 py-3 shadow-lg shadow-inatel/30">
+          <Button onClick={() => reservarSala(usuario, sala)} className="flex flex-1 items-center justify-center gap-2 py-3 shadow-lg shadow-inatel/30">
             <CheckCircle2 size={16} /> Confirmar Agendamento
           </Button>
         </div>

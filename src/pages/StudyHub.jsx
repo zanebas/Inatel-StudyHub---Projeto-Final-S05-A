@@ -4,13 +4,13 @@ import { ListaRecursos } from '../components/RecursoBadge.jsx'
 import { Badge, Button, Card, PageHeader, Vazio } from '../components/ui.jsx'
 
 function SalaCard({ sala }) {
-  const { iniciarReserva } = useApp()
-  const livre = sala.status === 'Livre'
+  const { consultarSala } = useApp()
+  const livre = sala.status === true
   return (
     <Card as="article" className="flex flex-col p-5 shadow-sm transition hover:shadow-md">
       <div className="flex items-start justify-between gap-2">
         <div>
-          <h3 className="text-lg font-bold">{sala.nome}</h3>
+          <h3 className="text-lg font-bold">Sala {sala.numero}</h3>
           {sala.descricao && <p className="text-xs text-slate-500 dark:text-slate-400">{sala.descricao}</p>}
         </div>
         {livre ? (
@@ -32,12 +32,12 @@ function SalaCard({ sala }) {
       </p>
 
       {livre ? (
-        <Button onClick={() => iniciarReserva(sala)} className="mt-5 py-2.5 focus:outline-none focus:ring-4 focus:ring-inatel/30">
+        <Button onClick={() => consultarSala(sala)} className="mt-5 py-2.5 focus:outline-none focus:ring-4 focus:ring-inatel/30">
           Reservar
         </Button>
       ) : (
         <button disabled className="mt-5 flex items-center justify-center gap-1.5 rounded-xl bg-slate-100 py-2.5 text-sm font-semibold text-slate-400 dark:bg-slate-800 dark:text-slate-500">
-          <Clock size={14} /> Término previsto: {sala.horarioLiberacao}
+          <Clock size={14} /> Término previsto: {sala.horarioSaida}
         </button>
       )}
     </Card>
@@ -57,7 +57,7 @@ const Kpi = ({ icon: Icon, rotulo, valor, sufixo }) => (
 /** Tela 1: consulta de salas em tempo real */
 export default function StudyHub() {
   const { setPagina, salas, salasFiltradas, totalLivres, proximaLiberacao, filtroAplicado, limparFiltro, usuario } = useApp()
-  const livresNoFiltro = salasFiltradas.filter((s) => s.status === 'Livre').length
+  const livresNoFiltro = salasFiltradas.filter((s) => s.status === true).length
 
   return (
     <div className="pb-24">
@@ -85,7 +85,7 @@ export default function StudyHub() {
         <div className="mt-10"><Vazio>Nenhuma sala atende aos filtros selecionados.</Vazio></div>
       ) : (
         <section className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {salasFiltradas.map((s) => <SalaCard key={s.id} sala={s} />)}
+          {salasFiltradas.map((s) => <SalaCard key={s.numero} sala={s} />)}
         </section>
       )}
 

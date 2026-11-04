@@ -20,12 +20,12 @@ function BannerReserva() {
   const { reserva, salas, setPagina } = useApp()
   const agora = useAgora()
   if (!reserva) return null
-  const { nome } = salas.find((s) => s.id === reserva.salaId)
+  const sala = salas.find((s) => s.numero === reserva.salaNumero)
   return (
     <div role="status" className="flex flex-col gap-3 rounded-2xl border border-emerald-300 bg-emerald-50 p-4 shadow-lg dark:border-emerald-500/40 dark:bg-emerald-950/80 sm:flex-row sm:items-center sm:justify-between">
       <p className="flex items-center gap-2 text-sm font-semibold text-emerald-900 dark:text-emerald-200">
         <span className="h-2.5 w-2.5 shrink-0 animate-pulse rounded-full bg-emerald-500" />
-        <span>Você possui uma reserva em andamento na {nome} (Restam {fmtTempo(reserva.endsAt - agora, false)} min)</span>
+        <span>Você possui uma reserva em andamento na Sala {sala?.numero} (Restam {fmtTempo(reserva.endsAt - agora, false)} min)</span>
       </p>
       <button onClick={() => setPagina('reserva')} className="shrink-0 rounded-xl bg-emerald-600 px-4 py-2 text-sm font-bold text-white hover:bg-emerald-700">
         Gerenciar Reserva
@@ -37,7 +37,7 @@ function BannerReserva() {
 export default function Inicio() {
   const { setPagina, salas, totalLivres, proximaLiberacao, usuario } = useApp()
   const previas = PREVIAS()
-  const comRecursos = salas.filter((s) => s.status === 'Livre' && (s.tv || s.lousa)).length
+  const comRecursos = salas.filter((s) => s.status === true && (s.tv || s.lousa)).length
   const proxima = proximaLiberacao != null && fmtHora(new Date(Date.now() + proximaLiberacao * 60000))
 
   return (

@@ -15,11 +15,12 @@ const inputCls = 'mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 p
 
 /** Tela 2: filtro de recursos, horário e capacidade */
 export default function Filtro() {
-  const { filtro, setFiltro, aplicarFiltro, limparFiltro, setPagina, salas, notificar } = useApp()
+  const { filtro, setFiltro, filtrarDisponiveis, limparFiltro, setPagina, salas, notificar } = useApp()
   const set = (patch) => setFiltro((f) => ({ ...f, ...patch }))
 
   const verificar = () => {
-    if (!aplicarFiltro()) return
+    const horario = { horarioEntrada: filtro.horarioEntrada, horarioSaida: filtro.horarioSaida }
+    if (!filtrarDisponiveis(horario, filtro)) return
     setPagina('studyhub')
     notificar('Filtro aplicado! Lista de salas atualizada.')
   }
@@ -59,7 +60,7 @@ export default function Filtro() {
 
         <Grupo titulo="Horário Desejado">
           <div className="grid grid-cols-2 gap-3">
-            {[['inicio', 'Início'], ['fim', 'Fim']].map(([campo, rotulo]) => (
+            {[['horarioEntrada', 'Início'], ['horarioSaida', 'Fim']].map(([campo, rotulo]) => (
               <label key={campo} className="text-xs font-semibold text-slate-500">{rotulo}
                 <input type="time" value={filtro[campo]} onChange={(e) => set({ [campo]: e.target.value })} className={inputCls} />
               </label>

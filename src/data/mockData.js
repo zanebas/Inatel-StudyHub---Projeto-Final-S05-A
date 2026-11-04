@@ -1,9 +1,62 @@
 const emMin = (min) => Date.now() + min * 60000
 const hhmm = (ms) => new Date(ms).toTimeString().slice(0, 5)
-const ocupada = (min) => ({ status: 'Ocupada', liberaEm: emMin(min), horarioLiberacao: hhmm(emMin(min)) })
-const sala = (id, extra) => ({ id, nome: `Sala ${id}`, status: 'Livre', arCondicionado: false, tv: false, lousa: false, computador: false, ...extra })
 
-export const USUARIO = { nome: 'Samuel Zanebone', matricula: 851, pendencia: false, reserva: null }
+export const liberarSala = (sala) =>
+  criarSalaEstudo({
+    ...sala,
+    status: true,
+    horarioEntrada: '',
+    horarioSaida: '',
+    liberaEm: undefined,
+  })
+
+export const marcarReservado = (sala, horarioEntrada = '', horarioSaida = '', liberaEm) =>
+  criarSalaEstudo({
+    ...sala,
+    status: false,
+    horarioEntrada,
+    horarioSaida,
+    liberaEm,
+  })
+
+const criarSalaEstudo = (dados) => ({
+  ...dados,
+  liberarSala() {
+    return liberarSala(this)
+  },
+  marcarReservado(horarioEntrada, horarioSaida, liberaEm) {
+    return marcarReservado(this, horarioEntrada, horarioSaida, liberaEm)
+  },
+})
+
+const ocupada = (min) => ({
+  status: false,
+  horarioEntrada: hhmm(Date.now() - 30 * 60000),
+  horarioSaida: hhmm(emMin(min)),
+  liberaEm: emMin(min),
+})
+
+const sala = (numero, extra) =>
+  criarSalaEstudo({
+    numero,
+    id: numero,
+    nome: `Sala ${numero}`,
+    status: true,
+    arCondicionado: false,
+    tv: false,
+    lousa: false,
+    computador: false,
+    horarioEntrada: '',
+    horarioSaida: '',
+    ...extra,
+  })
+
+export const USUARIO = {
+  nome: 'Samuel Zanebone',
+  matricula: 851,
+  pendencia: false,
+  reserva: false,
+}
 
 export const RECURSOS = [
   { key: 'arCondicionado', label: 'Ar-Condicionado' },
@@ -21,7 +74,15 @@ export const criarSalas = () => [
   sala(6, { tv: true, lousa: true, capacidade: 6, ...ocupada(25) }),
 ]
 
-export const FILTRO_INICIAL = { arCondicionado: false, lousa: false, tv: false, computador: false, inicio: '', fim: '', capacidade: null }
+export const FILTRO_INICIAL = {
+  arCondicionado: false,
+  lousa: false,
+  tv: false,
+  computador: false,
+  horarioEntrada: '',
+  horarioSaida: '',
+  capacidade: null,
+}
 
 export const HORARIO_AULA = '19:00 – 22:30'
 

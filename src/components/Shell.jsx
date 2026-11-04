@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { BookOpen, DoorOpen, Home, LogOut, Megaphone, Menu, Timer } from 'lucide-react'
+import { BookOpen, DoorOpen, Home, LogOut, Megaphone, Menu, Moon, Sun, Timer } from 'lucide-react'
 import { ATALHOS } from '../atalhos.js'
 import { useApp } from '../context/AppContext.jsx'
 import Toast from './Toast.jsx'
@@ -14,7 +14,7 @@ const ABAS = [
 const MENU = [...ATALHOS, { id: 'avisos', icon: Megaphone, titulo: 'Avisos' }]
 
 export default function Shell({ children }) {
-  const { pagina, setPagina, usuario, logout } = useApp()
+  const { dark, toggleDark, pagina, setPagina, usuario, logout } = useApp()
   const [menuAberto, setMenuAberto] = useState(false)
   const menuRef = useRef(null)
 
@@ -95,6 +95,15 @@ export default function Shell({ children }) {
           </nav>
 
           <div className="flex shrink-0 items-center gap-2">
+            <button
+              onClick={toggleDark}
+              title={dark ? 'Mudar para modo claro' : 'Mudar para modo escuro'}
+              aria-label="Alternar tema"
+              className="flex shrink-0 items-center gap-1.5 rounded-full border border-slate-200 bg-slate-50 p-2 text-xs font-semibold text-slate-700 transition hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700 md:px-3 md:py-1.5"
+            >
+              {dark ? <Sun size={16} className="text-amber-400" /> : <Moon size={16} />}
+              <span className="hidden lg:inline">{dark ? 'Claro' : 'Escuro'}</span>
+            </button>
             <button
               onClick={() => setPagina('perfil')}
               title="Ver Perfil"
