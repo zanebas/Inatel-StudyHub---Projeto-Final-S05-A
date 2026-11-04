@@ -43,7 +43,7 @@ export default function Confirmacao() {
           </Button>
         </div>
 
-        <div role="note" className="mt-6 flex gap-3 rounded-xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900 dark:border-amber-500/40 dark:bg-amber-500/10 dark:text-amber-200">
+        <div role="note" className="aviso-tolerancia">
           <TriangleAlert size={20} className="mt-0.5 shrink-0" />
           <p>
             <b>Aviso de Regra/Tolerância:</b> O aluno tem até 10 minutos após o início do horário para ocupar a sala presencialmente na biblioteca. Após esse período sem confirmação presencial, a reserva é cancelada automaticamente.

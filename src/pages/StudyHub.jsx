@@ -69,7 +69,7 @@ export default function StudyHub() {
         </button>
       )}
 
-      <section className="grid gap-4 rounded-2xl bg-gradient-to-br from-inatel to-inatel-light p-5 text-white sm:grid-cols-2">
+      <section className="studyhub-kpi-panel">
         <Kpi icon={DoorOpen} rotulo="Total de Salas Livres" valor={totalLivres} sufixo={`/ ${salas.length}`} />
         <Kpi icon={Clock} rotulo="Novas Salas Disponíveis em" valor={proximaLiberacao ?? '—'} sufixo={proximaLiberacao != null && 'min'} />
       </section>
@@ -89,8 +89,8 @@ export default function StudyHub() {
         </section>
       )}
 
-      <div className="fixed inset-x-0 bottom-16 z-20 flex justify-center md:bottom-0 bg-gradient-to-t from-slate-50 via-slate-50/90 to-transparent px-4 pb-4 pt-8 dark:from-slate-950 dark:via-slate-950/90">
-        <button onClick={() => setPagina('filtro')} className="flex w-full max-w-md items-center justify-center gap-2 rounded-full bg-slate-900 px-6 py-3.5 text-sm font-bold text-white shadow-xl transition hover:bg-slate-700 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200">
+      <div className="studyhub-floating-bar">
+        <button onClick={() => setPagina('filtro')} className="studyhub-filter-btn">
           <Filter size={16} /> Filtrar por Recursos
         </button>
       </div>

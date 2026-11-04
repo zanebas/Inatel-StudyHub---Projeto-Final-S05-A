@@ -2,7 +2,216 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  @apply bg-slate-50 text-slate-900 antialiased dark:bg-slate-950 dark:text-slate-100;
+@layer base {
+  body {
+    @apply bg-slate-50 text-slate-900 antialiased dark:bg-slate-950 dark:text-slate-100;
+  }
 }
 
+@layer components {
+  /* ========================================================================
+     1. Tela de Login (Login.jsx)
+     ======================================================================== */
+
+  .login-backdrop {
+    @apply flex min-h-screen flex-col overflow-x-hidden bg-[#020a28] bg-no-repeat text-[#0f172a] [background-position:center_bottom_28px] [background-size:100%_auto] md:bg-cover md:bg-center;
+    background-image:
+      linear-gradient(to bottom, rgba(2, 10, 40, 0.35), rgba(2, 10, 40, 0.5)),
+      url('/campus-inatel.jpg');
+  }
+
+  .login-card {
+    @apply w-full max-w-md rounded-2xl border border-slate-200 bg-white p-7 shadow-2xl shadow-slate-900/20 sm:p-9;
+  }
+
+  .login-pill {
+    @apply inline-flex items-center gap-2 rounded-full bg-inatel/10 px-3 py-1 text-[11px] font-bold text-inatel;
+  }
+
+  .login-user-box {
+    @apply rounded-xl border border-slate-200 bg-slate-50 p-4;
+  }
+
+  .login-avatar {
+    @apply flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-inatel-dark text-sm font-bold text-white;
+  }
+
+  .login-label {
+    @apply block text-[11px] font-bold uppercase tracking-wide text-slate-500;
+  }
+
+  .login-field {
+    @apply flex items-center gap-3 rounded-xl border border-slate-200 bg-white px-4 py-3 transition;
+  }
+
+  .login-field--focusable {
+    @apply focus-within:border-inatel-light focus-within:ring-2 focus-within:ring-inatel-light/40;
+  }
+
+  .login-submit-btn {
+    @apply flex w-full items-center justify-center gap-2 rounded-xl bg-inatel px-5 py-3.5 text-sm font-bold text-white shadow-lg shadow-inatel/30 transition duration-200 hover:-translate-y-0.5 hover:bg-inatel-light focus:outline-none focus:ring-4 focus:ring-inatel-light/40 active:translate-y-0 active:scale-[0.98];
+  }
+
+  /* ========================================================================
+     2. Componentes Base de UI (ui.jsx & RecursoBadge.jsx)
+     ======================================================================== */
+
+  .ui-card {
+    @apply rounded-2xl border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900;
+  }
+
+  .ui-btn {
+    @apply rounded-xl text-sm font-bold transition;
+  }
+
+  .ui-btn--primary {
+    @apply bg-inatel text-white hover:bg-inatel-dark;
+  }
+
+  .ui-btn--danger {
+    @apply border border-red-300 text-red-600 hover:bg-red-50 dark:border-red-500/40 dark:text-red-300 dark:hover:bg-red-500/10;
+  }
+
+  .ui-btn--outline {
+    @apply border border-slate-300 hover:bg-slate-50 dark:border-slate-700 dark:hover:bg-slate-800;
+  }
+
+  .ui-badge {
+    @apply rounded-full font-bold;
+  }
+
+  .ui-badge--green {
+    @apply bg-emerald-100 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-300;
+  }
+
+  .ui-badge--red {
+    @apply bg-red-100 text-red-700 dark:bg-red-500/15 dark:text-red-300;
+  }
+
+  .ui-badge--blue {
+    @apply bg-blue-100 text-blue-700 dark:bg-sky-400/15 dark:text-sky-300;
+  }
+
+  .ui-badge--amber {
+    @apply bg-amber-100 text-amber-700 dark:bg-amber-500/15 dark:text-amber-300;
+  }
+
+  .ui-back-btn {
+    @apply flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:hover:bg-slate-800;
+  }
+
+  .ui-empty-state {
+    @apply rounded-2xl border border-dashed border-slate-300 p-10 text-center text-slate-500 dark:border-slate-700;
+  }
+
+  .recurso-badge {
+    @apply inline-flex items-center gap-1.5 rounded-full bg-slate-100 font-medium text-slate-600 dark:bg-slate-800 dark:text-slate-300;
+  }
+
+  .recurso-badge--sm {
+    @apply px-2 py-0.5 text-[11px];
+  }
+
+  .recurso-badge--lg {
+    @apply px-3 py-1.5 text-sm;
+  }
+
+  /* ========================================================================
+     3. Navegação e Layout Principal (Shell.jsx & Toast.jsx)
+     ======================================================================== */
+
+  .app-header {
+    @apply sticky top-0 z-30 border-b border-slate-200 bg-white/90 backdrop-blur dark:border-slate-800 dark:bg-slate-900/90;
+  }
+
+  .app-dropdown-menu {
+    @apply absolute left-0 top-full z-50 mt-2 w-64 rounded-2xl border border-slate-200 bg-white p-2 shadow-xl dark:border-slate-700 dark:bg-slate-900;
+  }
+
+  .app-nav-pill {
+    @apply flex shrink-0 items-center gap-2 whitespace-nowrap rounded-full px-3 py-1.5 text-sm font-semibold transition;
+  }
+
+  .app-nav-pill--active {
+    @apply bg-inatel text-white shadow-md shadow-inatel/25;
+  }
+
+  .app-nav-pill--inactive {
+    @apply text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800;
+  }
+
+  .app-theme-btn {
+    @apply flex shrink-0 items-center gap-1.5 rounded-full border border-slate-200 bg-slate-50 p-2 text-xs font-semibold text-slate-700 transition hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700 md:px-3 md:py-1.5;
+  }
+
+  .app-profile-pill {
+    @apply flex shrink-0 items-center gap-3 whitespace-nowrap rounded-full border border-slate-200 bg-slate-50 py-1 pl-1 pr-1 transition hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700 md:pr-5;
+  }
+
+  .app-bottom-nav {
+    @apply fixed inset-x-0 bottom-0 z-40 grid grid-cols-4 border-t border-slate-200 bg-white pb-[env(safe-area-inset-bottom)] dark:border-slate-800 dark:bg-slate-900 md:hidden;
+  }
+
+  .toast-container {
+    @apply fixed inset-x-4 bottom-20 z-50 mx-auto flex max-w-md items-center gap-3 rounded-xl border border-slate-200 bg-white p-4 text-sm font-medium shadow-xl dark:border-slate-700 dark:bg-slate-800 sm:left-auto sm:right-6 sm:mx-0 md:bottom-4;
+  }
+
+  /* ========================================================================
+     4. Dashboard e Telas do StudyHub (Inicio, StudyHub, Filtro, Confirmacao)
+     ======================================================================== */
+
+  .hero-studyhub {
+    @apply relative overflow-hidden rounded-2xl bg-cover bg-center bg-no-repeat p-6 text-white shadow-xl sm:p-10;
+    background-image:
+      linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.92)),
+      url('/biblioteca.jpg');
+  }
+
+  .hero-chip {
+    @apply inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1.5 text-sm font-semibold backdrop-blur;
+  }
+
+  .hero-cta-btn {
+    @apply mt-6 inline-flex items-center gap-2 rounded-xl bg-white px-6 py-3.5 text-sm font-extrabold text-inatel shadow-lg transition hover:-translate-y-0.5 hover:shadow-xl active:scale-[0.98];
+  }
+
+  .banner-reserva-ativa {
+    @apply flex flex-col gap-3 rounded-2xl border border-emerald-300 bg-emerald-50 p-4 shadow-lg dark:border-emerald-500/40 dark:bg-emerald-950/80 sm:flex-row sm:items-center sm:justify-between;
+  }
+
+  .quick-action-card {
+    @apply rounded-2xl border border-slate-200 bg-white p-4 text-left transition duration-200 hover:-translate-y-1 hover:border-inatel/40 hover:shadow-lg dark:border-slate-800 dark:bg-slate-900 dark:hover:border-sky-400/40 sm:p-5;
+  }
+
+  .studyhub-kpi-panel {
+    @apply grid gap-4 rounded-2xl bg-gradient-to-br from-inatel to-inatel-light p-5 text-white sm:grid-cols-2;
+  }
+
+  .studyhub-floating-bar {
+    @apply fixed inset-x-0 bottom-16 z-20 flex justify-center bg-gradient-to-t from-slate-50 via-slate-50/90 to-transparent px-4 pb-4 pt-8 dark:from-slate-950 dark:via-slate-950/90 md:bottom-0;
+  }
+
+  .studyhub-filter-btn {
+    @apply flex w-full max-w-md items-center justify-center gap-2 rounded-full bg-slate-900 px-6 py-3.5 text-sm font-bold text-white shadow-xl transition hover:bg-slate-700 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200;
+  }
+
+  .filtro-input {
+    @apply mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm outline-none focus:border-inatel focus:ring-2 focus:ring-inatel/30 dark:border-slate-700 dark:bg-slate-800;
+  }
+
+  .filtro-pill {
+    @apply flex-1 rounded-full border px-4 py-2.5 text-sm font-semibold transition;
+  }
+
+  .filtro-pill--active {
+    @apply border-inatel bg-inatel text-white;
+  }
+
+  .filtro-pill--inactive {
+    @apply border-slate-200 text-slate-600 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800;
+  }
+
+  .aviso-tolerancia {
+    @apply mt-6 flex gap-3 rounded-xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900 dark:border-amber-500/40 dark:bg-amber-500/10 dark:text-amber-200;
+  }
+}

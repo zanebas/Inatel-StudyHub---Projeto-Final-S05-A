@@ -13,7 +13,7 @@ const PREVIAS = () => ({
 })
 
 const Chip = ({ children }) => (
-  <span className="inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1.5 text-sm font-semibold backdrop-blur">{children}</span>
+  <span className="hero-chip">{children}</span>
 )
 
 function BannerReserva() {
@@ -22,7 +22,7 @@ function BannerReserva() {
   if (!reserva) return null
   const sala = salas.find((s) => s.numero === reserva.salaNumero)
   return (
-    <div role="status" className="flex flex-col gap-3 rounded-2xl border border-emerald-300 bg-emerald-50 p-4 shadow-lg dark:border-emerald-500/40 dark:bg-emerald-950/80 sm:flex-row sm:items-center sm:justify-between">
+    <div role="status" className="banner-reserva-ativa">
       <p className="flex items-center gap-2 text-sm font-semibold text-emerald-900 dark:text-emerald-200">
         <span className="h-2.5 w-2.5 shrink-0 animate-pulse rounded-full bg-emerald-500" />
         <span>Você possui uma reserva em andamento na Sala {sala?.numero} (Restam {fmtTempo(reserva.endsAt - agora, false)} min)</span>
@@ -66,10 +66,7 @@ export default function Inicio() {
         </div>
       </header>
 
-      <section
-        className="relative overflow-hidden rounded-2xl bg-cover bg-center bg-no-repeat p-6 text-white shadow-xl sm:p-10"
-        style={{ backgroundImage: "linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.92)), url('biblioteca.jpg')" }}
-      >
+      <section className="hero-studyhub">
         <div className="relative max-w-2xl">
           <span className="inline-block rounded-full bg-white/15 px-3 py-1 text-[11px] font-bold tracking-widest">NOVIDADE • BIBLIOTECA INATEL</span>
           <h3 className="mt-4 text-2xl font-extrabold leading-tight sm:text-4xl">Inatel StudyHub — Salas de Estudo em Tempo Real</h3>
@@ -82,7 +79,7 @@ export default function Inicio() {
           </div>
           <button
             onClick={() => setPagina(usuario.reserva ? 'reserva' : 'studyhub')}
-            className="group mt-6 inline-flex items-center gap-2 rounded-xl bg-white px-6 py-3.5 text-sm font-extrabold text-inatel shadow-lg transition hover:-translate-y-0.5 hover:shadow-xl active:scale-[0.98]"
+            className="hero-cta-btn group"
           >
             {usuario.reserva ? 'Gerenciar minha reserva' : 'Reservar uma Sala Agora'}
             <ArrowRight size={18} className="transition group-hover:translate-x-1" />
@@ -97,7 +94,7 @@ export default function Inicio() {
           <button
             key={id}
             onClick={() => setPagina(id)}
-            className="group rounded-2xl border border-slate-200 bg-white p-4 text-left transition duration-200 hover:-translate-y-1 hover:border-inatel/40 hover:shadow-lg dark:border-slate-800 dark:bg-slate-900 dark:hover:border-sky-400/40 sm:p-5"
+            className="quick-action-card group"
           >
             <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-inatel/10 text-inatel transition group-hover:bg-inatel group-hover:text-white dark:bg-sky-400/10 dark:text-sky-300">
               <Icon size={22} />

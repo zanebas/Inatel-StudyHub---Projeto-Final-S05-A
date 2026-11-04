@@ -11,8 +11,6 @@ const Grupo = ({ titulo, children }) => (
   </Card>
 )
 
-const inputCls = 'mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm outline-none focus:border-inatel focus:ring-2 focus:ring-inatel/30 dark:border-slate-700 dark:bg-slate-800'
-
 /** Tela 2: filtro de recursos, horário e capacidade */
 export default function Filtro() {
   const { filtro, setFiltro, filtrarDisponiveis, limparFiltro, setPagina, salas, notificar } = useApp()
@@ -30,11 +28,7 @@ export default function Filtro() {
       type="button"
       onClick={() => set({ capacidade: filtro.capacidade === valor ? null : valor })}
       aria-pressed={filtro.capacidade === valor}
-      className={`flex-1 rounded-full border px-4 py-2.5 text-sm font-semibold transition ${
-        filtro.capacidade === valor
-          ? 'border-inatel bg-inatel text-white'
-          : 'border-slate-200 text-slate-600 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800'
-      }`}
+      className={`filtro-pill ${filtro.capacidade === valor ? 'filtro-pill--active' : 'filtro-pill--inactive'}`}
     >
       {label}
     </button>
@@ -62,7 +56,7 @@ export default function Filtro() {
           <div className="grid grid-cols-2 gap-3">
             {[['horarioEntrada', 'Início'], ['horarioSaida', 'Fim']].map(([campo, rotulo]) => (
               <label key={campo} className="text-xs font-semibold text-slate-500">{rotulo}
-                <input type="time" value={filtro[campo]} onChange={(e) => set({ [campo]: e.target.value })} className={inputCls} />
+                <input type="time" value={filtro[campo]} onChange={(e) => set({ [campo]: e.target.value })} className="filtro-input" />
               </label>
             ))}
           </div>
