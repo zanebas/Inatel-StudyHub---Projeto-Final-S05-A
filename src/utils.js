@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { DISCIPLINAS } from './data/mockData.js'
 
 export const pad = (n) => String(n).padStart(2, '0')
 export const fmtHora = (d) => `${pad(d.getHours())}:${pad(d.getMinutes())}`
@@ -14,8 +13,6 @@ export const fmtTempo = (ms, comHoras = true) => {
   const mmss = `${pad(comHoras ? min % 60 : min)}:${pad(s % 60)}`
   return comHoras ? `${pad(Math.floor(min / 60))}:${mmss}` : mmss
 }
-
-export const media = (campo) => Math.round(DISCIPLINAS.reduce((a, d) => a + d[campo], 0) / DISCIPLINAS.length)
 
 /** Relógio que atualiza a cada segundo */
 export const useAgora = () => {

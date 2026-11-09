@@ -1,5 +1,3 @@
-import { ArrowLeft } from 'lucide-react'
-
 const cx = (...c) => c.filter(Boolean).join(' ')
 
 export const Card = ({ as: Tag = 'section', className, ...p }) => (
@@ -25,15 +23,12 @@ export const Badge = ({ tom = 'blue', className, ...p }) => (
   <span className={cx(TONS[tom], className)} {...p} />
 )
 
-export const PageHeader = ({ titulo, subtitulo, onVoltar, voltarLabel = 'Home' }) => (
-  <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
-    <div>
-      <h2 className="text-2xl font-extrabold sm:text-3xl">{titulo}</h2>
-      {subtitulo && <p className="text-sm text-slate-500 dark:text-slate-400">{subtitulo}</p>}
-    </div>
+export const PageHeader = ({ titulo, onVoltar, voltarLabel = 'Voltar às Salas' }) => (
+  <div>
     <button onClick={onVoltar} className="ui-back-btn">
-      <ArrowLeft size={16} /> {voltarLabel}
+      {voltarLabel}
     </button>
+    {titulo && <h2 className="page-title">{titulo}</h2>}
   </div>
 )
 

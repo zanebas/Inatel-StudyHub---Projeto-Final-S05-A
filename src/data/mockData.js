@@ -67,11 +67,11 @@ export const RECURSOS = [
 
 export const criarSalas = () => [
   sala(1, { tv: true, capacidade: 2 }),
-  sala(2, { tv: true, capacidade: 2, ...ocupada(8) }),
-  sala(3, { computador: true, capacidade: 2, ...ocupada(15) }),
-  sala(4, { descricao: 'Estudo em Grupo', arCondicionado: true, tv: true, lousa: true, capacidade: 6 }),
-  sala(5, { descricao: 'Estudo em Grupo', arCondicionado: true, tv: true, computador: true, capacidade: 6 }),
-  sala(6, { tv: true, lousa: true, capacidade: 6, ...ocupada(25) }),
+  sala(2, { computador: true, capacidade: 2, ...ocupada(8) }),
+  sala(3, { descricao: 'Estudo em Grupo', tv: true, arCondicionado: true, computador: true, capacidade: 6 }),
+  sala(4, { descricao: 'Estudo em Grupo', arCondicionado: true, tv: true, lousa: true, capacidade: 6, ...ocupada(15) }),
+  sala(5, { lousa: true, tv: true, capacidade: 2 }),
+  sala(6, { descricao: 'Estudo em Grupo', tv: true, lousa: true, capacidade: 6, ...ocupada(25) }),
 ]
 
 export const FILTRO_INICIAL = {
@@ -84,42 +84,119 @@ export const FILTRO_INICIAL = {
   capacidade: null,
 }
 
-export const HORARIO_AULA = '19:00 – 22:30'
-
-const disc = (cod, nome, sigla, dia, diaLabel) => ({ cod, nome, sigla, dia, diaLabel, nota: 100, freq: 100 })
 export const DISCIPLINAS = [
-  disc('G04 A', 'Fundamentos de Gestão de Projetos', 'FGP', 1, 'Seg'),
-  disc('S01 A', 'Paradigmas da Programação', 'PP', 2, 'Ter'),
-  disc('S05 A', 'Interação Homem Máquina', 'IHM', 3, 'Qua'),
-  disc('M03 A', 'Cálculo Aplicado à Engenharia I', 'CAE I', 4, 'Qui'),
-  disc('E08 A', 'Eletrônica Digital Aplicada a Contadores e Sequenciadores', 'EDACS', 5, 'Sex'),
-  disc('F01 A', 'Física Newtoniana Clássica', 'FNC', 5, 'Sex'),
+  { cod: 'E08 A', nome: 'Eletrônica Digital Aplicada a Contadores e Sequenciadores' },
+  { cod: 'F01 A', nome: 'Física Newtoniana Clássica' },
+  { cod: 'G04 A', nome: 'Fundamentos de Gestão de Projetos' },
+  { cod: 'M03 A', nome: 'Cálculo Aplicado à Engenharia I' },
+  { cod: 'S01 A', nome: 'Paradigmas da Programação' },
+  { cod: 'S05 A', nome: 'Interação Homem Máquina' },
 ]
+
+export const ALUNO = { nome: USUARIO.nome, email: 'samuel.zanebone@ges.inatel.br' }
 
 export const AVISOS = [
-  { t: 'Parabéns, você foi aprovado na disciplina de Interação Homem Máquina, com a melhor nota da história!', d: 'Nota final 100. Excelente trabalho!', tag: 'Acadêmico', cor: 'blue', data: '31/10' },
-  { t: 'Inscrições abertas: Maratona de Programação Inatel', d: 'Monte sua equipe e inscreva-se até 15/11 na Secretaria Acadêmica.', tag: 'Urgente', cor: 'red', data: '30/10' },
-  { t: 'Biblioteca: horário estendido', d: 'Funcionamento até 22:30 durante o período de provas.', tag: 'Institucional', cor: 'amber', data: '28/10' },
+  {
+    titulo: 'Novidade: Inatel StudyHub',
+    texto: 'Conheça o Inatel StudyHub: consulte as salas de estudo da biblioteca em tempo real, filtre por recursos e reserve a sua pela aba StudyHub.',
+    tag: 'NOVIDADE',
+    data: '09/11',
+  },
+  {
+    titulo: 'Parabéns!',
+    texto: 'Parabéns, você atingiu a maior nota da história do Inatel na disciplina de Interação Homem Máquina.',
+    tag: 'ACADÊMICO',
+    data: '09/11',
+  },
+  {
+    titulo: 'Tesouraria: débito na Biblioteca',
+    texto: 'Foi identificado um débito de R$ 15,00 referente à Biblioteca. Procure a Tesouraria para regularizar.',
+    tag: 'TESOURARIA',
+    data: '09/11',
+  },
 ]
 
-export const REGRAS = [
-  ['Funcionamento', '07:30 às 22:30'],
-  ['Tolerância para ocupar a sala', '10 minutos'],
-  ['Extensão máxima de reserva', '30 minutos'],
-  ['Reservas simultâneas', '1 por aluno'],
+export const DIAS_SIGLAS = ['S', 'T', 'Q', 'Q', 'S', 'S']
+
+// Grade [hora, [seg, ter, qua, qui, sex, sab]]
+export const GRADE_HORARIOS = [
+  ['07:00', ['S05 L1', '', 'F01 L2', 'F01 A', '', '']],
+  ['08:00', ['', '', '', '', '', '']],
+  ['08:50', ['', '', '', '', '', '']],
+  ['10:00', ['', '', 'M03 A', '', '', '']],
+  ['10:50', ['', '', 'M03 A', '', '', '']],
+  ['13:30', ['', '', '', 'F01 A', '', '']],
+  ['14:20', ['', '', '', 'F01 A', '', '']],
+  ['15:30', ['M03 A', '', '', 'G04 A', '', '']],
+  ['16:20', ['M03 A', '', '', 'G04 A', '', '']],
+  ['17:30', ['E08 A', '', 'S05 A', 'S01 A', 'E08 L4', '']],
+  ['18:20', ['E08 A', '', 'S05 A', 'S01 A', 'E08 L4', '']],
+  ['19:30', ['', '', '', '', '', '']],
+  ['20:20', ['', '', '', '', '', '']],
+  ['21:30', ['', '', '', '', '', '']],
+  ['22:20', ['', '', '', '', '', '']],
 ]
 
-export const PERFIL = [
-  ['Nome', USUARIO.nome],
-  ['Matrícula', String(USUARIO.matricula)],
-  ['Curso', 'Engenharia de Software – 4º período'],
-]
+// Avaliações por disciplina [avaliação, nota]
+export const NOTAS_AVALIACOES = {
+  'E08 A': [['NP1', '100'], ['Prova 2', '100']],
+  'F01 A': [['Prova 1', '100'], ['Prova 2', '100']],
+  'G04 A': [['Exercício 1', '100'], ['Exercício 2', '100'], ['NP1', '100'], ['Exercício 3', '100']],
+  'M03 A': [['NP1', '100'], ['Prova 2', '100']],
+  'S01 A': [['NP1', '100'], ['Prova 2', '100']],
+  'S05 A': [['NP1', '100'], ['Prova 2', '100']],
+}
 
-export const TEMPO_MEDIO_USO = '1h 30min'
-
-export const HORARIOS_BIBLIOTECA = [
-  ['Segunda a Sexta', '07:30 às 22:30'],
-  ['Sábado', '08:00 às 12:00'],
-  ['Domingo e feriados', 'Fechada'],
-  ['Tolerância para ocupar a sala', '10 minutos'],
+// Itens do menu: [título, descrição, ação] (ação: id de aba, 'logout' ou omitida = indisponível)
+export const MENU_SECOES = [
+  {
+    titulo: 'INATEL STUDYHUB',
+    itens: [['StudyHub (Reserva de Salas)', 'Consulte e reserve salas de estudo da biblioteca', 'studyhub']],
+  },
+  {
+    titulo: 'APROVEITAMENTO ESCOLAR',
+    itens: [
+      ['Notas', 'Apresenta as Notas do Semestre', 'notas'],
+      ['Material Didático', 'Apresenta o Material de Aula Publicado pelo Docente'],
+      ['Plano de Ensino', 'Apresenta o Plano de Ensino das Disciplinas'],
+      ['Histórico Escolar', 'Apresenta o Histórico Escolar do Aluno'],
+      ['Coeficiente Acadêmico', 'Apresenta os Coeficientes de todos os Semestres.'],
+    ],
+  },
+  {
+    titulo: 'ATIVIDADES COMPLEMENTARES',
+    itens: [
+      ['Avaliações', 'Apresenta as Avaliações de A.C.'],
+      ['Atividades Eletivas', 'Apresenta as Atividades Eletivas'],
+      ['Atividades Obrigatórias', 'Apresenta as Atividades Obrigatórias'],
+    ],
+  },
+  {
+    titulo: 'CALENDÁRIOS E HORÁRIOS',
+    itens: [
+      ['Calendário Acadêmico', 'Apresenta o Calendário Acadêmico'],
+      ['Eventos Inatel', 'Apresenta os Eventos do Inatel'],
+      ['Provas', 'Apresenta o Calendário de Provas'],
+      ['Reposições', 'Apresenta as Reposições de Aula'],
+      ['Horários de Aula', 'Apresenta os Horários de Aula', 'horarios'],
+      ['Cronograma de Aula', 'Apresenta o Cronograma de Aula'],
+      ['Horários Atendimento Monitores', 'Apresenta os Horários de Atendimento dos Monitores'],
+    ],
+  },
+  {
+    titulo: 'TESOURARIA',
+    itens: [['Consulta Lançamentos Tesouraria', 'Apresenta os Lançamentos da Tesouraria']],
+  },
+  {
+    titulo: 'OUTRAS OPÇÕES',
+    itens: [
+      ['Consulta de Pedidos', 'Apresenta os Pedidos realizados'],
+      ['Avaliação de Docentes', 'Avalie os Docentes das Disciplinas'],
+      ['Pesquisa Institucional', 'Responda às Pesquisas Institucionais'],
+      ['Central de Cópias', 'Acesse os serviços da Central de Cópias'],
+      ['Requerimentos', 'Apresenta os Requerimentos do Aluno'],
+      ['Configurações', 'Ajuste as configurações do aplicativo'],
+      ['Sair', 'Encerra a sessão do aluno', 'logout'],
+    ],
+  },
 ]

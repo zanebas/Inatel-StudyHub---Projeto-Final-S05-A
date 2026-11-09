@@ -9,9 +9,6 @@
 }
 
 @layer components {
-  /* ========================================================================
-     1. Tela de Login (Login.jsx)
-     ======================================================================== */
 
   .login-backdrop {
     @apply flex min-h-screen flex-col overflow-x-hidden bg-[#020a28] bg-no-repeat text-[#0f172a] [background-position:center_bottom_28px] [background-size:100%_auto] md:bg-cover md:bg-center;
@@ -21,35 +18,35 @@
   }
 
   .login-card {
-    @apply w-full max-w-md rounded-2xl border border-slate-200 bg-white p-7 shadow-2xl shadow-slate-900/20 sm:p-9;
+    @apply w-full max-w-md rounded-lg border border-zinc-800 bg-black p-6 text-white shadow-sm sm:p-7;
   }
 
   .login-pill {
-    @apply inline-flex items-center gap-2 rounded-full bg-inatel/10 px-3 py-1 text-[11px] font-bold text-inatel;
+    @apply text-xs font-semibold uppercase tracking-wide text-zinc-400;
   }
 
   .login-user-box {
-    @apply rounded-xl border border-slate-200 bg-slate-50 p-4;
+    @apply rounded-md border border-zinc-800 bg-zinc-900 p-3;
   }
 
   .login-avatar {
-    @apply flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-inatel-dark text-sm font-bold text-white;
+    @apply flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#0066cc] text-sm font-bold text-white;
   }
 
   .login-label {
-    @apply block text-[11px] font-bold uppercase tracking-wide text-slate-500;
+    @apply block text-xs font-semibold uppercase text-zinc-400;
   }
 
   .login-field {
-    @apply flex items-center gap-3 rounded-xl border border-slate-200 bg-white px-4 py-3 transition;
+    @apply flex items-center gap-3 rounded-md border border-zinc-700 bg-zinc-900 px-3 py-2.5 text-white;
   }
 
   .login-field--focusable {
-    @apply focus-within:border-inatel-light focus-within:ring-2 focus-within:ring-inatel-light/40;
+    @apply focus-within:border-[#0066cc] focus-within:ring-1 focus-within:ring-[#0066cc];
   }
 
   .login-submit-btn {
-    @apply flex w-full items-center justify-center gap-2 rounded-xl bg-inatel px-5 py-3.5 text-sm font-bold text-white shadow-lg shadow-inatel/30 transition duration-200 hover:-translate-y-0.5 hover:bg-inatel-light focus:outline-none focus:ring-4 focus:ring-inatel-light/40 active:translate-y-0 active:scale-[0.98];
+    @apply flex w-full items-center justify-center gap-2 rounded-md bg-[#0066cc] px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[#0055b8] focus:outline-none focus:ring-2 focus:ring-[#0066cc]/40 focus:ring-offset-1;
   }
 
   /* ========================================================================
@@ -57,55 +54,55 @@
      ======================================================================== */
 
   .ui-card {
-    @apply rounded-2xl border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900;
+    @apply rounded-md border border-zinc-500 bg-black;
   }
 
   .ui-btn {
-    @apply rounded-xl text-sm font-bold transition;
+    @apply rounded-md text-sm font-bold transition;
   }
 
   .ui-btn--primary {
-    @apply bg-inatel text-white hover:bg-inatel-dark;
+    @apply bg-[#0066cc] text-white hover:bg-[#0055b3];
   }
 
   .ui-btn--danger {
-    @apply border border-red-300 text-red-600 hover:bg-red-50 dark:border-red-500/40 dark:text-red-300 dark:hover:bg-red-500/10;
+    @apply border border-red-500/60 bg-zinc-900 text-red-400 hover:bg-red-500/10;
   }
 
   .ui-btn--outline {
-    @apply border border-slate-300 hover:bg-slate-50 dark:border-slate-700 dark:hover:bg-slate-800;
+    @apply border border-zinc-500 bg-zinc-900 text-white hover:bg-zinc-800;
   }
 
   .ui-badge {
-    @apply rounded-full font-bold;
+    @apply rounded font-semibold;
   }
 
   .ui-badge--green {
-    @apply bg-emerald-100 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-300;
+    @apply bg-emerald-500/10 text-emerald-400;
   }
 
   .ui-badge--red {
-    @apply bg-red-100 text-red-700 dark:bg-red-500/15 dark:text-red-300;
+    @apply bg-red-500/10 text-red-400;
   }
 
   .ui-badge--blue {
-    @apply bg-blue-100 text-blue-700 dark:bg-sky-400/15 dark:text-sky-300;
+    @apply bg-[#0066cc]/15 text-[#3b82f6];
   }
 
   .ui-badge--amber {
-    @apply bg-amber-100 text-amber-700 dark:bg-amber-500/15 dark:text-amber-300;
+    @apply bg-amber-500/10 text-amber-400;
   }
 
   .ui-back-btn {
-    @apply flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:hover:bg-slate-800;
+    @apply inline-flex items-center gap-1.5 rounded-md border border-zinc-500 bg-black px-3.5 py-1.5 text-sm font-medium text-white transition hover:bg-zinc-900;
   }
 
   .ui-empty-state {
-    @apply rounded-2xl border border-dashed border-slate-300 p-10 text-center text-slate-500 dark:border-slate-700;
+    @apply rounded-lg border border-dashed border-zinc-800 p-10 text-center text-zinc-500;
   }
 
   .recurso-badge {
-    @apply inline-flex items-center gap-1.5 rounded-full bg-slate-100 font-medium text-slate-600 dark:bg-slate-800 dark:text-slate-300;
+    @apply inline-flex items-center gap-1.5 rounded border border-zinc-800 bg-zinc-900 font-medium text-zinc-300;
   }
 
   .recurso-badge--sm {
@@ -120,98 +117,392 @@
      3. Navegação e Layout Principal (Shell.jsx & Toast.jsx)
      ======================================================================== */
 
-  .app-header {
-    @apply sticky top-0 z-30 border-b border-slate-200 bg-white/90 backdrop-blur dark:border-slate-800 dark:bg-slate-900/90;
+
+
+
+
+
+
+
+
+  .popup-backdrop {
+    @apply fixed inset-0 z-50 flex items-center justify-center bg-black/75 px-4;
   }
 
-  .app-dropdown-menu {
-    @apply absolute left-0 top-full z-50 mt-2 w-64 rounded-2xl border border-slate-200 bg-white p-2 shadow-xl dark:border-slate-700 dark:bg-slate-900;
+  .popup-card {
+    @apply w-full max-w-[320px] overflow-hidden rounded-md border border-zinc-500 bg-black text-center shadow-2xl;
   }
 
-  .app-nav-pill {
-    @apply flex shrink-0 items-center gap-2 whitespace-nowrap rounded-full px-3 py-1.5 text-sm font-semibold transition;
+  .popup-card__header {
+    @apply flex items-center justify-between border-b border-zinc-500 bg-[#0066cc] px-4 py-2.5 text-sm font-bold text-white;
   }
 
-  .app-nav-pill--active {
-    @apply bg-inatel text-white shadow-md shadow-inatel/25;
+  .popup-card__body {
+    @apply px-5 py-4;
   }
 
-  .app-nav-pill--inactive {
-    @apply text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800;
+  .popup-card__msg {
+    @apply text-[15px] leading-snug text-white;
   }
 
-  .app-theme-btn {
-    @apply flex shrink-0 items-center gap-1.5 rounded-full border border-slate-200 bg-slate-50 p-2 text-xs font-semibold text-slate-700 transition hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700 md:px-3 md:py-1.5;
-  }
-
-  .app-profile-pill {
-    @apply flex shrink-0 items-center gap-3 whitespace-nowrap rounded-full border border-slate-200 bg-slate-50 py-1 pl-1 pr-1 transition hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700 md:pr-5;
-  }
-
-  .app-bottom-nav {
-    @apply fixed inset-x-0 bottom-0 z-40 grid grid-cols-4 border-t border-slate-200 bg-white pb-[env(safe-area-inset-bottom)] dark:border-slate-800 dark:bg-slate-900 md:hidden;
-  }
-
-  .toast-container {
-    @apply fixed inset-x-4 bottom-20 z-50 mx-auto flex max-w-md items-center gap-3 rounded-xl border border-slate-200 bg-white p-4 text-sm font-medium shadow-xl dark:border-slate-700 dark:bg-slate-800 sm:left-auto sm:right-6 sm:mx-0 md:bottom-4;
+  .popup-card__btn {
+    @apply mt-4 inline-flex items-center justify-center rounded-md border border-zinc-500 bg-[#0066cc] px-8 py-1.5 text-sm font-bold text-white transition hover:bg-[#0055b3];
   }
 
   /* ========================================================================
      4. Dashboard e Telas do StudyHub (Inicio, StudyHub, Filtro, Confirmacao)
      ======================================================================== */
 
-  .hero-studyhub {
-    @apply relative overflow-hidden rounded-2xl bg-cover bg-center bg-no-repeat p-6 text-white shadow-xl sm:p-10;
-    background-image:
-      linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.92)),
-      url('/biblioteca.jpg');
-  }
 
-  .hero-chip {
-    @apply inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1.5 text-sm font-semibold backdrop-blur;
-  }
 
-  .hero-cta-btn {
-    @apply mt-6 inline-flex items-center gap-2 rounded-xl bg-white px-6 py-3.5 text-sm font-extrabold text-inatel shadow-lg transition hover:-translate-y-0.5 hover:shadow-xl active:scale-[0.98];
-  }
 
-  .banner-reserva-ativa {
-    @apply flex flex-col gap-3 rounded-2xl border border-emerald-300 bg-emerald-50 p-4 shadow-lg dark:border-emerald-500/40 dark:bg-emerald-950/80 sm:flex-row sm:items-center sm:justify-between;
-  }
 
-  .quick-action-card {
-    @apply rounded-2xl border border-slate-200 bg-white p-4 text-left transition duration-200 hover:-translate-y-1 hover:border-inatel/40 hover:shadow-lg dark:border-slate-800 dark:bg-slate-900 dark:hover:border-sky-400/40 sm:p-5;
-  }
 
-  .studyhub-kpi-panel {
-    @apply grid gap-4 rounded-2xl bg-gradient-to-br from-inatel to-inatel-light p-5 text-white sm:grid-cols-2;
-  }
 
-  .studyhub-floating-bar {
-    @apply fixed inset-x-0 bottom-16 z-20 flex justify-center bg-gradient-to-t from-slate-50 via-slate-50/90 to-transparent px-4 pb-4 pt-8 dark:from-slate-950 dark:via-slate-950/90 md:bottom-0;
-  }
 
   .studyhub-filter-btn {
-    @apply flex w-full max-w-md items-center justify-center gap-2 rounded-full bg-slate-900 px-6 py-3.5 text-sm font-bold text-white shadow-xl transition hover:bg-slate-700 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200;
+    @apply mx-auto mt-3 flex items-center justify-center gap-2 rounded-md border border-zinc-500 bg-[#0066cc] px-7 py-2 text-[15px] font-semibold text-white transition hover:bg-[#0055b3];
   }
 
   .filtro-input {
-    @apply mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm outline-none focus:border-inatel focus:ring-2 focus:ring-inatel/30 dark:border-slate-700 dark:bg-slate-800;
+    @apply w-full rounded-md border border-zinc-500 bg-zinc-900 px-3 py-2.5 text-center text-sm text-white outline-none [color-scheme:dark] focus:border-[#0066cc];
   }
 
   .filtro-pill {
-    @apply flex-1 rounded-full border px-4 py-2.5 text-sm font-semibold transition;
+    @apply flex-1 rounded-md border px-3 py-2.5 text-sm font-semibold transition;
   }
 
   .filtro-pill--active {
-    @apply border-inatel bg-inatel text-white;
+    @apply border-[#0066cc] bg-[#0066cc] text-white;
   }
 
   .filtro-pill--inactive {
-    @apply border-slate-200 text-slate-600 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800;
+    @apply border-zinc-500 bg-zinc-900 text-zinc-200 hover:bg-zinc-800;
   }
 
   .aviso-tolerancia {
-    @apply mt-6 flex gap-3 rounded-xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900 dark:border-amber-500/40 dark:bg-amber-500/10 dark:text-amber-200;
+    @apply mt-7 px-2 text-center text-xs leading-relaxed text-zinc-300;
+  }
+
+  /* ========================================================================
+     5. Casca do App Acadêmico Inatel (appInatel/*) — tema escuro oficial
+     ======================================================================== */
+
+  .inatel-app {
+    @apply min-h-screen bg-black text-white;
+  }
+
+  .inatel-container {
+    @apply mx-auto w-full max-w-3xl;
+  }
+
+  .inatel-header {
+    @apply sticky top-0 z-30 bg-[#0066cc] pb-3.5 pt-4 text-center;
+  }
+
+  .inatel-header__title {
+    @apply text-[17px] font-bold text-white;
+  }
+
+  .inatel-content {
+    @apply pb-28;
+  }
+
+  .inatel-studyhub-content {
+    @apply px-4 pb-4 pt-5;
+  }
+
+  .inatel-search {
+    @apply border-b border-zinc-900 px-3 py-2;
+  }
+
+  .inatel-search__box {
+    @apply flex items-center gap-2 rounded-xl bg-[#2c2c2e] px-3 py-2.5 text-zinc-400;
+  }
+
+  .inatel-search__input {
+    @apply w-full bg-transparent text-[17px] text-white outline-none placeholder:text-zinc-400;
+  }
+
+  .inatel-empty {
+    @apply border-b border-zinc-900 py-5 text-center text-[17px] text-[#0066cc];
+  }
+
+  .inatel-bottom-nav {
+    @apply fixed inset-x-0 bottom-0 z-40 border-t border-zinc-800 bg-black pb-[env(safe-area-inset-bottom)];
+  }
+
+  .inatel-bottom-nav__inner {
+    @apply mx-auto flex max-w-3xl;
+  }
+
+  .inatel-nav-item {
+    @apply flex flex-1 flex-col items-center gap-1 py-2.5 text-[11px] font-medium text-[#8e8e93] transition;
+  }
+
+  .inatel-nav-item--active {
+    @apply text-[#0a84ff];
+  }
+
+  .horarios-grid {
+    @apply grid grid-cols-[3.5rem_repeat(6,minmax(0,1fr))] gap-1.5 px-1 pb-4;
+  }
+
+  .horarios-grid__dia {
+    @apply py-1 text-center text-xs font-medium text-white;
+  }
+
+  .horarios-grid__hora {
+    @apply flex h-[52px] items-center justify-center rounded-md bg-[#0066cc] text-[13px] font-bold text-white;
+  }
+
+  .horarios-grid__cell {
+    @apply flex h-[52px] items-center justify-center rounded-md border border-zinc-500 bg-black px-0.5 text-center text-xs font-semibold leading-tight text-white;
+  }
+
+  .notas-titulo {
+    @apply flex items-start justify-between gap-3 px-6 pb-2 pt-5 text-[17px] font-bold leading-snug text-[#0066cc];
+  }
+
+  .notas-table {
+    @apply grid grid-cols-[1.25fr_1fr] text-center text-white;
+  }
+
+  .notas-table__head {
+    @apply border border-zinc-500 bg-[#0066cc] py-3 text-[17px];
+  }
+
+  .notas-table__cell {
+    @apply border border-zinc-500 bg-black py-4 text-[17px];
+  }
+
+  .menu-section-title {
+    @apply px-5 pb-2 pt-8 text-[13px] uppercase tracking-wide text-zinc-500;
+  }
+
+  .menu-row {
+    @apply flex w-full items-center justify-between gap-3 border-t border-zinc-900 px-5 py-3 text-left transition hover:bg-zinc-900;
+  }
+
+  .menu-row__title {
+    @apply text-[17px] leading-tight text-white;
+  }
+
+  .menu-row__desc {
+    @apply mt-0.5 text-xs text-zinc-400;
+  }
+
+  .menu-aluno {
+    @apply flex items-start gap-3 border-t border-zinc-900 px-5 py-3;
+  }
+
+  .menu-aluno__avatar {
+    @apply flex h-14 w-14 items-center justify-center rounded-full bg-zinc-500 text-zinc-900;
+  }
+
+  /* ========================================================================
+     6. Módulo StudyHub no padrão visual do app (StudyHub, Filtro, Confirmacao)
+     ======================================================================== */
+
+  .page-title {
+    @apply mt-5 text-center text-[17px] font-bold text-[#0066cc];
+  }
+
+  .page-subtitle {
+    @apply text-sm text-zinc-500;
+  }
+
+
+
+
+
+  .studyhub-info {
+    @apply mx-auto mt-3 flex max-w-[330px] items-center justify-between gap-3 rounded-md border border-zinc-500 bg-zinc-900 px-3.5 py-2 text-xs text-white;
+  }
+
+  .studyhub-reserva-banner {
+    @apply mx-auto mt-3 flex w-full max-w-[330px] items-center justify-center rounded-md border border-zinc-500 bg-[#0066cc] px-4 py-2 text-center text-xs font-bold text-white transition hover:bg-[#0055b3];
+  }
+
+
+  .studyhub-primary-btn {
+    @apply flex w-full items-center justify-center gap-2 rounded-md bg-[#0066cc] py-3.5 text-sm font-bold text-white transition hover:bg-[#0055b3];
+  }
+
+  .filtro-opcao {
+    @apply flex cursor-pointer items-center gap-3 rounded-md border border-zinc-800 p-3 text-sm font-medium text-white transition;
+  }
+
+  .filtro-opcao--active {
+    @apply border-[#0066cc] bg-[#0066cc]/10;
+  }
+
+  .confirmacao-linha {
+    @apply flex flex-col gap-1 border-b border-zinc-800 py-3 last:border-0 sm:flex-row sm:items-center sm:justify-between;
+  }
+
+  .confirmacao-recursos {
+    @apply mt-4 rounded-md border border-zinc-800 bg-black p-4;
+  }
+
+  .reserva-tempo {
+    @apply mx-auto mt-3.5 w-4/5 rounded-md border border-zinc-500 bg-zinc-900 py-3 font-mono text-xl font-bold tracking-wider tabular-nums text-white;
+  }
+
+  .reserva-tempo--critico {
+    @apply text-red-400;
+  }
+
+  .aviso-item {
+    @apply border-b border-zinc-900 px-5 py-4;
+  }
+
+  .aviso-item__topo {
+    @apply flex items-center justify-between;
+  }
+
+  .aviso-item__tag {
+    @apply rounded bg-[#0066cc]/15 px-2 py-0.5 text-[11px] font-bold tracking-wide text-[#3b82f6];
+  }
+
+  .aviso-item__data {
+    @apply text-xs text-zinc-500;
+  }
+
+  .aviso-item__titulo {
+    @apply mt-2 text-[17px] font-bold leading-snug text-white;
+  }
+
+  .aviso-item__texto {
+    @apply mt-1 text-sm text-zinc-400;
+  }
+
+  .inatel-nav-novo {
+    @apply absolute -top-2 left-full -ml-1 flex items-center gap-0.5 whitespace-nowrap rounded bg-[#0066cc] px-1 py-px text-[9px] font-bold text-white;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+  /* ========================================================================
+     7. Padrão dos wireframes (Filtro, Confirmação, Reserva)
+     ======================================================================== */
+
+  .wf-secao-titulo {
+    @apply mb-2 mt-6 text-center text-[17px] font-bold text-[#0066cc];
+  }
+
+  .wf-box {
+    @apply rounded-md border border-zinc-500 bg-zinc-900 px-3 py-2 text-center text-sm font-medium text-white;
+  }
+
+  .wf-box__rotulo {
+    @apply font-normal text-zinc-300;
+  }
+
+  .wf-par {
+    @apply grid grid-cols-2 gap-4;
+  }
+
+  .wf-acoes {
+    @apply mt-7 grid grid-cols-2 gap-4;
+  }
+
+  .wf-acoes-coluna {
+    @apply mx-auto mt-8 flex w-full max-w-xs flex-col gap-3;
+  }
+
+  .wf-opcao {
+    @apply flex cursor-pointer items-center gap-3 rounded-md px-1 py-2 text-[15px] text-white;
+  }
+
+  .reserva-card__titulo {
+    @apply text-center text-[18px] font-bold text-[#0066cc];
+  }
+
+  .reserva-card__linha {
+    @apply mt-3 text-[15px] text-white;
+  }
+
+  .reserva-card__rotulo {
+    @apply text-zinc-300;
+  }
+
+  /* ========================================================================
+     8. StudyHub no padrão das tabelas do app (mesma identidade de Notas)
+     ======================================================================== */
+
+
+
+  .sala-status {
+    @apply shrink-0 text-[15px] text-white;
+  }
+
+  .sala-status--livre {
+    @apply font-semibold text-emerald-400;
+  }
+
+  .sala-status--ocupada {
+    @apply font-semibold text-red-400;
+  }
+
+  /* ========================================================================
+     9. StudyHub: wireframe + identidade do app (painel, filtro e cartões)
+     ======================================================================== */
+
+  .sh-painel {
+    @apply mx-auto mt-4 max-w-[330px] rounded-md border border-zinc-500 bg-black px-4 py-3.5 text-center;
+  }
+
+  .sh-painel__titulo {
+    @apply text-[18px] font-bold text-[#0066cc];
+  }
+
+  .sh-painel__linha {
+    @apply mt-1.5 text-[15px] text-white;
+  }
+
+  .sh-lista {
+    @apply mt-4 space-y-5;
+  }
+
+  .sala-card {
+    @apply flex flex-col border-y border-zinc-500 bg-black px-4 py-4;
+  }
+
+  .sala-card__topo {
+    @apply flex items-start justify-between gap-3;
+  }
+
+  .sala-card__nome {
+    @apply text-[19px] font-bold text-[#0066cc];
+  }
+
+  .sala-card__corpo {
+    @apply mt-2.5 text-[15px] leading-snug text-white;
+  }
+
+  .sala-card__rotulo {
+    @apply text-zinc-300;
+  }
+
+  .sala-card__capacidade {
+    @apply mt-6 text-[15px] text-white;
+  }
+
+  .sala-card__acao {
+    @apply mx-auto mt-3.5 border border-zinc-500 px-8 py-1.5 text-sm;
+  }
+
+  .sala-card__ocupada {
+    @apply mx-auto mt-3.5 flex items-center justify-center rounded-md border border-zinc-500 bg-zinc-900 px-5 py-1.5 text-sm font-medium text-zinc-200;
   }
 }

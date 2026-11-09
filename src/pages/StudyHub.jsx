@@ -1,99 +1,106 @@
-import { Clock, DoorOpen, Filter, Users, X } from 'lucide-react'
+import { X } from 'lucide-react'
 import { useApp } from '../context/AppContext.jsx'
-import { ListaRecursos } from '../components/RecursoBadge.jsx'
-import { Badge, Button, Card, PageHeader, Vazio } from '../components/ui.jsx'
+import { RECURSOS } from '../data/mockData.js'
+import { recursosDe } from '../components/RecursoBadge.jsx'
+import { Button, Vazio } from '../components/ui.jsx'
+
+const rotuloDe = Object.fromEntries(RECURSOS.map((r) => [r.key, r.label]))
+
+const formatarHorasMin = (min) => {
+  if (min == null) return '00:00'
+  const h = String(Math.floor(min / 60)).padStart(2, '0')
+  const m = String(min % 60).padStart(2, '0')
+  return `${h}:${m}`
+}
 
 function SalaCard({ sala }) {
   const { consultarSala } = useApp()
   const livre = sala.status === true
+  const recursos = recursosDe(sala).map((r) => rotuloDe[r])
+  const inlineRecurso = recursos.length === 1 && sala.numero === 1
+
   return (
-    <Card as="article" className="flex flex-col p-5 shadow-sm transition hover:shadow-md">
-      <div className="flex items-start justify-between gap-2">
-        <div>
-          <h3 className="text-lg font-bold">Sala {sala.numero}</h3>
-          {sala.descricao && <p className="text-xs text-slate-500 dark:text-slate-400">{sala.descricao}</p>}
-        </div>
-        {livre ? (
-          <Badge tom="green" className="flex items-center gap-1.5 px-2.5 py-1 text-xs">
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-75" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
-            </span>
-            Livre
-          </Badge>
+    <article className="sala-card">
+      <div className="sala-card__topo">
+        <h3 className="sala-card__nome">Sala {sala.numero}</h3>
+        <p className="sala-status">
+          Status:{' '}
+          <span className={livre ? 'sala-status--livre' : 'sala-status--ocupada'}>
+            {livre ? 'Livre' : 'Ocupada'}
+          </span>
+        </p>
+      </div>
+
+      <div className="sala-card__corpo">
+        <span className="sala-card__rotulo">Destaque de recursos:</span>
+        {inlineRecurso ? (
+          <span> {recursos[0]}</span>
         ) : (
-          <Badge tom="red" className="px-2.5 py-1 text-xs">Ocupada</Badge>
+          <ul className="mt-0.5 space-y-0.5">
+            {recursos.map((r) => (
+              <li key={r}>{r}</li>
+            ))}
+          </ul>
         )}
       </div>
 
-      <div className="mt-4 flex flex-wrap gap-1.5"><ListaRecursos sala={sala} /></div>
-      <p className="mt-4 flex items-center gap-1.5 text-sm text-slate-600 dark:text-slate-400">
-        <Users size={14} /> {sala.capacidade} alunos
+      <p className="sala-card__capacidade">
+        <span className="sala-card__rotulo">Capacidade de Alunos:</span>{' '}
+        {sala.capacidade > 2 ? 'Estudo em grupo' : sala.capacidade}
       </p>
 
       {livre ? (
-        <Button onClick={() => consultarSala(sala)} className="mt-5 py-2.5 focus:outline-none focus:ring-4 focus:ring-inatel/30">
+        <Button onClick={() => consultarSala(sala)} className="sala-card__acao">
           Reservar
         </Button>
       ) : (
-        <button disabled className="mt-5 flex items-center justify-center gap-1.5 rounded-xl bg-slate-100 py-2.5 text-sm font-semibold text-slate-400 dark:bg-slate-800 dark:text-slate-500">
-          <Clock size={14} /> Término previsto: {sala.horarioSaida}
-        </button>
+        <p className="sala-card__ocupada">
+          Término Previsto: {sala.horarioSaida}:00 horas
+        </p>
       )}
-    </Card>
+    </article>
   )
 }
 
-const Kpi = ({ icon: Icon, rotulo, valor, sufixo }) => (
-  <div className="flex items-center gap-3">
-    <Icon size={28} className="shrink-0 opacity-90" />
-    <div>
-      <p className="text-xs uppercase tracking-wide text-white/80">{rotulo}</p>
-      <p className="text-3xl font-extrabold">{valor}{sufixo && <span className="text-base font-semibold text-white/70"> {sufixo}</span>}</p>
-    </div>
-  </div>
-)
-
-/** Tela 1: consulta de salas em tempo real */
+/** Tela 1: consulta de salas em tempo real (wireframe + identidade visual do app) */
 export default function StudyHub() {
-  const { setPagina, salas, salasFiltradas, totalLivres, proximaLiberacao, filtroAplicado, limparFiltro, usuario } = useApp()
+  const { setPagina, salasFiltradas, totalLivres, proximaLiberacao, filtroAplicado, limparFiltro, usuario } = useApp()
   const livresNoFiltro = salasFiltradas.filter((s) => s.status === true).length
 
   return (
-    <div className="pb-24">
-      <PageHeader titulo="Inatel StudyHub" subtitulo="Verifique as salas disponíveis" onVoltar={() => setPagina('inicio')} />
-
+    <div className="pb-4">
       {usuario.reserva && (
-        <button onClick={() => setPagina('reserva')} className="mb-4 w-full rounded-xl border border-emerald-300 bg-emerald-50 p-3 text-left text-sm font-semibold text-emerald-800 dark:border-emerald-500/40 dark:bg-emerald-500/10 dark:text-emerald-300">
+        <button onClick={() => setPagina('reserva')} className="studyhub-reserva-banner">
           Você tem uma reserva em andamento. Toque para gerenciar →
         </button>
       )}
 
-      <section className="studyhub-kpi-panel">
-        <Kpi icon={DoorOpen} rotulo="Total de Salas Livres" valor={totalLivres} sufixo={`/ ${salas.length}`} />
-        <Kpi icon={Clock} rotulo="Novas Salas Disponíveis em" valor={proximaLiberacao ?? '—'} sufixo={proximaLiberacao != null && 'min'} />
+      <section className="sh-painel">
+        <h2 className="sh-painel__titulo">Verifique as Salas Disponíveis</h2>
+        <p className="sh-painel__linha">Total de Salas livres: <b>{totalLivres}</b></p>
+        <p className="sh-painel__linha">
+          Novas Salas Disponíveis em: <b>{formatarHorasMin(proximaLiberacao)} horas</b>
+        </p>
       </section>
 
+      <button onClick={() => setPagina('filtro')} className="studyhub-filter-btn">
+        Filtrar por Recursos
+      </button>
+
       {filtroAplicado && (
-        <div className="mt-4 flex items-center justify-between gap-3 rounded-xl border border-amber-300 bg-amber-50 p-3 text-sm dark:border-amber-500/40 dark:bg-amber-500/10">
+        <div className="studyhub-info">
           <span><b>{salasFiltradas.length}</b> sala(s) correspondem ao filtro, sendo <b>{livresNoFiltro}</b> livre(s).</span>
-          <button onClick={limparFiltro} className="flex shrink-0 items-center gap-1 font-bold text-amber-700 dark:text-amber-300"><X size={14} /> Limpar</button>
+          <button onClick={limparFiltro} className="flex shrink-0 items-center gap-1 font-bold text-[#0066cc]"><X size={14} /> Limpar</button>
         </div>
       )}
 
       {salasFiltradas.length === 0 ? (
-        <div className="mt-10"><Vazio>Nenhuma sala atende aos filtros selecionados.</Vazio></div>
+        <div className="px-4 pt-6"><Vazio>Nenhuma sala atende aos filtros selecionados.</Vazio></div>
       ) : (
-        <section className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <section className="sh-lista">
           {salasFiltradas.map((s) => <SalaCard key={s.numero} sala={s} />)}
         </section>
       )}
-
-      <div className="studyhub-floating-bar">
-        <button onClick={() => setPagina('filtro')} className="studyhub-filter-btn">
-          <Filter size={16} /> Filtrar por Recursos
-        </button>
-      </div>
     </div>
   )
 }

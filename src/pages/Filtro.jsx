@@ -1,19 +1,10 @@
-import { Search } from 'lucide-react'
 import { useApp } from '../context/AppContext.jsx'
 import { RECURSOS } from '../data/mockData.js'
-import { ICONES } from '../components/RecursoBadge.jsx'
-import { Card, PageHeader } from '../components/ui.jsx'
+import { Button, Card, PageHeader } from '../components/ui.jsx'
 
-const Grupo = ({ titulo, children }) => (
-  <Card className="p-5">
-    <h3 className="mb-4 text-sm font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400">{titulo}</h3>
-    {children}
-  </Card>
-)
-
-/** Tela 2: filtro de recursos, horário e capacidade */
+/** Tela 2: filtro de recursos, horário e capacidade (wireframe) */
 export default function Filtro() {
-  const { filtro, setFiltro, filtrarDisponiveis, limparFiltro, setPagina, salas, notificar } = useApp()
+  const { filtro, setFiltro, filtrarDisponiveis, limparFiltro, setPagina, notificar } = useApp()
   const set = (patch) => setFiltro((f) => ({ ...f, ...patch }))
 
   const verificar = () => {
@@ -35,48 +26,41 @@ export default function Filtro() {
   )
 
   return (
-    <div className="mx-auto max-w-xl">
-      <PageHeader titulo="Filtrar Salas" subtitulo="Refine sua busca por recursos e horário" voltarLabel="Voltar às salas" onVoltar={() => setPagina('studyhub')} />
-      <div className="space-y-4">
-        <Grupo titulo="Recursos da Sala">
-          <div className="grid gap-2 sm:grid-cols-2">
-            {RECURSOS.map(({ key, label }) => {
-              const Icon = ICONES[key]
-              return (
-                <label key={key} className={`flex cursor-pointer items-center gap-3 rounded-xl border p-3 text-sm font-medium transition ${filtro[key] ? 'border-inatel bg-inatel/5 dark:bg-sky-400/10' : 'border-slate-200 dark:border-slate-700'}`}>
-                  <input type="checkbox" checked={filtro[key]} onChange={(e) => set({ [key]: e.target.checked })} className="h-4 w-4 accent-[#005CA9]" />
-                  <Icon size={16} className="text-slate-500" /> {label}
-                </label>
-              )
-            })}
-          </div>
-        </Grupo>
+    <div>
+      <PageHeader onVoltar={() => setPagina('studyhub')} />
 
-        <Grupo titulo="Horário Desejado">
-          <div className="grid grid-cols-2 gap-3">
-            {[['horarioEntrada', 'Início'], ['horarioSaida', 'Fim']].map(([campo, rotulo]) => (
-              <label key={campo} className="text-xs font-semibold text-slate-500">{rotulo}
-                <input type="time" value={filtro[campo]} onChange={(e) => set({ [campo]: e.target.value })} className="filtro-input" />
-              </label>
-            ))}
-          </div>
-          <p className="mt-3 text-xs text-slate-500 dark:text-slate-400">Se informado, será usado como tempo de permanência na reserva.</p>
-        </Grupo>
+      <h2 className="wf-secao-titulo">Recursos da Sala</h2>
+      <Card className="px-4 py-2">
+        {RECURSOS.map(({ key, label }) => (
+          <label key={key} className="wf-opcao">
+            <input type="checkbox" checked={filtro[key]} onChange={(e) => set({ [key]: e.target.checked })} className="h-4 w-4 accent-[#0066cc]" />
+            {label}
+          </label>
+        ))}
+      </Card>
 
-        <Grupo titulo="Capacidade de Alunos">
-          <div className="flex gap-3">
-            {pill('exata', '2 Alunos')}
-            {pill('grupo', '2 ou mais alunos')}
-          </div>
-          <p className="mt-3 text-xs text-slate-500 dark:text-slate-400">“2 ou mais alunos” exibe as salas de estudo em grupo (6 lugares).</p>
-        </Grupo>
+      <h2 className="wf-secao-titulo">Horário Desejado</h2>
+      <Card className="p-4">
+        <div className="wf-par">
+          {[['horarioEntrada', 'Início'], ['horarioSaida', 'Fim']].map(([campo, rotulo]) => (
+            <label key={campo} className="block text-center text-xs font-semibold text-zinc-500">{rotulo}
+              <input type="time" value={filtro[campo]} onChange={(e) => set({ [campo]: e.target.value })} className="filtro-input mt-1" />
+            </label>
+          ))}
+        </div>
+      </Card>
 
-        <button onClick={verificar} className="flex w-full items-center justify-center gap-2 rounded-xl bg-inatel py-3.5 text-sm font-bold text-white shadow-lg shadow-inatel/30 transition hover:bg-inatel-dark">
-          <Search size={16} /> Verificar Salas Disponíveis
-        </button>
-        <button onClick={() => { limparFiltro(); notificar(`Filtros limpos. ${salas.length} salas listadas.`) }} className="w-full text-sm font-semibold text-slate-500 hover:underline">
-          Limpar filtros
-        </button>
+      <Card className="mt-6 p-4">
+        <h2 className="mb-3 text-center text-[17px] font-bold text-white">Capacidade de Alunos</h2>
+        <div className="flex gap-3">
+          {pill('exata', '2 Alunos')}
+          {pill('grupo', '2 ou mais alunos')}
+        </div>
+      </Card>
+
+      <div className="wf-acoes-coluna">
+        <Button onClick={verificar} className="py-3">Verificar Salas Disponíveis</Button>
+        <Button variant="outline" onClick={() => { limparFiltro(); notificar('Filtros limpos.') }} className="py-3">Limpar Filtros</Button>
       </div>
     </div>
   )
