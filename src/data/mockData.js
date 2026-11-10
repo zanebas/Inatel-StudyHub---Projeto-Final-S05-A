@@ -157,6 +157,7 @@ export const MENU_SECOES = [
     titulo: 'APROVEITAMENTO ESCOLAR',
     itens: [
       ['Notas', 'Apresenta as Notas do Semestre', 'notas'],
+      ['Frequência', 'Apresenta a Frequência do Semestre'],
       ['Material Didático', 'Apresenta o Material de Aula Publicado pelo Docente'],
       ['Plano de Ensino', 'Apresenta o Plano de Ensino das Disciplinas'],
       ['Histórico Escolar', 'Apresenta o Histórico Escolar do Aluno'],
