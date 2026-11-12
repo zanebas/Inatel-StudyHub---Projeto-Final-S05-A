@@ -325,7 +325,7 @@
   }
 
   .studyhub-reserva-banner {
-    @apply flex w-full items-center justify-center rounded-lg border border-zinc-800 bg-[#0066cc] px-4 py-2.5 text-center text-xs font-bold text-white transition hover:bg-[#0055b8];
+    @apply mb-4 flex w-full items-center gap-3 rounded-lg border border-amber-500/40 bg-amber-500/15 p-3.5 text-left text-amber-300 transition hover:bg-amber-500/20;
   }
 
 
@@ -482,12 +482,28 @@
     @apply text-lg font-bold text-[#0066cc];
   }
 
+  .sh-painel__progress-track {
+    @apply mx-auto mt-2.5 h-1.5 w-full overflow-hidden rounded-full bg-zinc-800;
+  }
+
+  .sh-painel__progress-bar {
+    @apply h-full rounded-full bg-[#0066cc] transition-all duration-300;
+  }
+
   .sh-sugestao-btn {
     @apply flex w-full items-center justify-center gap-2 rounded-md border border-zinc-800 bg-zinc-900 px-3 py-2 text-xs font-medium text-zinc-300 transition hover:border-[#0066cc] hover:text-white;
   }
 
   .sh-secao-header__titulo {
     @apply mb-2 px-1 text-xs font-semibold uppercase tracking-wider text-zinc-400;
+  }
+
+  .sh-toggle-livres {
+    @apply rounded border border-zinc-700 bg-zinc-900 px-2.5 py-1 text-xs font-medium text-zinc-300 transition hover:border-zinc-600 hover:text-white;
+  }
+
+  .sh-toggle-livres--ativo {
+    @apply border-[#0066cc] bg-[#0066cc]/20 font-semibold text-white;
   }
 
   .sh-lista {
@@ -534,6 +550,10 @@
     @apply w-full rounded-md py-2 text-sm font-bold;
   }
 
+  .sala-card__acao--bloqueada {
+    @apply w-full cursor-not-allowed rounded-md border border-zinc-800 bg-zinc-900 py-2 text-center text-sm font-medium text-zinc-500;
+  }
+
   .sala-card__ocupada {
     @apply w-full rounded-md border border-zinc-800 bg-zinc-900 py-2 text-center text-sm font-medium text-zinc-400;
   }
@@ -544,6 +564,14 @@
 
   .sala-card__fila--ativa {
     @apply border-[#0066cc]/60 bg-[#0066cc]/10 font-semibold text-white;
+  }
+
+  .sh-historico {
+    @apply mt-6;
+  }
+
+  .sh-historico-row {
+    @apply flex items-center justify-between gap-2 border-b border-zinc-900 py-2 text-xs text-zinc-400 last:border-0;
   }
 
   .participantes-box {

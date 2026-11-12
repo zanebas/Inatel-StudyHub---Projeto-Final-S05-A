@@ -21,6 +21,7 @@ export function AppProvider({ children }) {
   const [salaSelecionada, setSalaSelecionada] = useState(null)
   const [reserva, setReserva] = useState(null)
   const [filaEspera, setFilaEspera] = useState([])
+  const [historicoSessao, setHistoricoSessao] = useState([])
   const [toast, setToast] = useState(null)
   const [agora, setAgora] = useState(Date.now())
 
@@ -203,13 +204,27 @@ export function AppProvider({ children }) {
     if (!reserva) return
     const numero = salaAlvo?.numero ?? reserva.salaNumero
     const salaAtual = salas.find((s) => s.numero === numero)
+    const nomeSala = salaAtual?.nome ?? `Sala ${numero}`
+    const foiCancelada =
+      reserva.statusCheckin === 'pendente' || motivoCustom.toLowerCase().includes('cancelad')
+
+    setHistoricoSessao((prev) => [
+      {
+        id: Date.now(),
+        salaNome: nomeSala,
+        horario: `${reserva.horarioEntrada} às ${reserva.horarioSaida}`,
+        encerradoEm: fmtHora(new Date()),
+        status: foiCancelada ? 'Cancelada' : 'Devolvida',
+      },
+      ...prev,
+    ])
     setSalas((ss) => ss.map((s) => (s.numero === numero ? s.liberarSala() : s)))
     setUsuario((u) => ({ ...u, reserva: false }))
     setReserva(null)
     setSalaSelecionada(null)
     notificar(
       motivoCustom ||
-        (automatico ? `Tempo esgotado. ${salaAtual?.nome} devolvida.` : `${salaAtual?.nome} devolvida com sucesso!`),
+        (automatico ? `Tempo esgotado. ${nomeSala} devolvida.` : `${nomeSala} devolvida com sucesso!`),
       automatico ? 'erro' : 'sucesso',
     )
     setPagina('studyhub')
@@ -241,7 +256,7 @@ export function AppProvider({ children }) {
     salaSelecionada, consultarSala, calcularPermanencia,
     reservarSala, confirmarCheckin, aumentarTempoReserva, devolverSala,
     liberarSala, marcarReservado,
-    reserva,
+    reserva, reservaAtiva: reserva, historicoSessao,
     toast, notificar, dismissToast: () => setToast(null),
   }
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>
