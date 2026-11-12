@@ -7,8 +7,9 @@ import { Button, Vazio } from '../components/ui.jsx'
 const rotuloDe = Object.fromEntries(RECURSOS.map((r) => [r.key, r.label]))
 
 function SalaCard({ sala }) {
-  const { consultarSala } = useApp()
+  const { consultarSala, filaEspera, alternarFilaEspera } = useApp()
   const livre = sala.status === true
+  const naFila = filaEspera.includes(sala.numero)
   const recursos = recursosDe(sala).map((r) => rotuloDe[r])
 
   return (
@@ -44,9 +45,20 @@ function SalaCard({ sala }) {
           Reservar
         </Button>
       ) : (
-        <p className="sala-card__ocupada">
-          Término previsto: {sala.horarioSaida}
-        </p>
+        <button
+          type="button"
+          onClick={() => alternarFilaEspera(sala)}
+          className={`sala-card__fila ${naFila ? 'sala-card__fila--ativa' : ''}`}
+        >
+          {naFila ? (
+            <>
+              <span className="h-2 w-2 rounded-full bg-[#0066cc]" />
+              Na fila de espera (Cancelar aviso)
+            </>
+          ) : (
+            `Entrar na fila de espera (Libera às ${sala.horarioSaida})`
+          )}
+        </button>
       )}
     </article>
   )
@@ -54,8 +66,17 @@ function SalaCard({ sala }) {
 
 /** Tela 1: consulta de salas em tempo real (wireframe + identidade visual do app) */
 export default function StudyHub() {
-  const { setPagina, salas, salasFiltradas, totalLivres, proximaLiberacao, filtroAplicado, limparFiltro, consultarSala, usuario } = useApp()
-  const salasLivresAgora = salas.filter((s) => s.status === true)
+  const {
+    setPagina,
+    salas,
+    salasFiltradas,
+    totalLivres,
+    proximaLiberacao,
+    filtroAplicado,
+    limparFiltro,
+    aplicarSugestaoHorario,
+    usuario,
+  } = useApp()
   const livresFiltradas = salasFiltradas.filter((s) => s.status === true)
   const ocupadasFiltradas = salasFiltradas.filter((s) => s.status !== true)
 
@@ -70,40 +91,25 @@ export default function StudyHub() {
       <section className="sh-painel">
         <h2 className="sh-painel__titulo">Verifique as Salas Disponíveis</h2>
 
-        <div className="sh-painel__kpi">
-          <div className="flex items-center justify-center gap-2">
-            <span className="sala-status__dot--livre" />
-            <span className="text-xs font-semibold uppercase tracking-wide text-zinc-300">
-              Salas Livres no Momento
-            </span>
-          </div>
-          <p className="mt-1 text-3xl font-extrabold text-white">
-            {totalLivres} <span className="text-sm font-normal text-zinc-400">de {salas.length} salas</span>
-          </p>
+        <p className="mt-1.5 text-lg font-bold text-white">
+          <span className="text-2xl font-extrabold text-[#0066cc]">{totalLivres}</span> de {salas.length} salas livres
+        </p>
 
-          {salasLivresAgora.length > 0 && (
-            <div className="mt-2.5 flex flex-wrap justify-center gap-1.5">
-              {salasLivresAgora.map((s) => (
-                <button
-                  key={s.numero}
-                  type="button"
-                  onClick={() => consultarSala(s)}
-                  className="sh-painel__chip"
-                >
-                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-                  Sala {s.numero}
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
-
-        <p className="sh-painel__linha mt-2.5">
+        <p className="mt-1 text-xs text-zinc-400">
           Próxima liberação em:{' '}
-          <span className="font-semibold text-zinc-200">
+          <span className="font-semibold text-zinc-300">
             {proximaLiberacao != null ? `${proximaLiberacao} min` : '—'}
           </span>
         </p>
+
+        <button
+          type="button"
+          onClick={() => aplicarSugestaoHorario('08:00', '10:00')}
+          className="sh-sugestao-btn mt-3"
+        >
+          <span className="h-1.5 w-1.5 rounded-full bg-[#0066cc]" />
+          Sugestão: Próxima janela livre (08:00 - 10:00)
+        </button>
 
         <button onClick={() => setPagina('filtro')} className="studyhub-filter-btn">
           Filtrar por Recursos
@@ -123,24 +129,14 @@ export default function StudyHub() {
         <div className="space-y-5">
           {livresFiltradas.length > 0 && (
             <section className="sh-lista">
-              <div className="sh-secao-header">
-                <span className="sala-status__dot--livre" />
-                <h3 className="sh-secao-header__titulo">
-                  Salas Livres Agora ({livresFiltradas.length})
-                </h3>
-              </div>
+              <h3 className="sh-secao-header__titulo">Salas Disponíveis</h3>
               {livresFiltradas.map((s) => <SalaCard key={s.numero} sala={s} />)}
             </section>
           )}
 
           {ocupadasFiltradas.length > 0 && (
             <section className="sh-lista">
-              <div className="sh-secao-header">
-                <span className="sala-status__dot--ocupada" />
-                <h3 className="sh-secao-header__titulo text-zinc-400">
-                  Salas Ocupadas ({ocupadasFiltradas.length})
-                </h3>
-              </div>
+              <h3 className="sh-secao-header__titulo">Salas Ocupadas</h3>
               {ocupadasFiltradas.map((s) => <SalaCard key={s.numero} sala={s} />)}
             </section>
           )}

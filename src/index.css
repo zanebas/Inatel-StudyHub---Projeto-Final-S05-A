@@ -471,31 +471,23 @@
   }
 
   .sh-painel__titulo {
-    @apply mb-3 text-base font-bold text-white;
-  }
-
-  .sh-painel__kpi {
-    @apply rounded-md border border-[#0066cc]/40 bg-black px-3 py-3;
-  }
-
-  .sh-painel__chip {
-    @apply inline-flex items-center gap-1.5 rounded border border-zinc-700 bg-zinc-900 px-2.5 py-1 text-xs font-semibold text-white transition hover:border-[#0066cc] hover:bg-[#0066cc]/20;
+    @apply text-base font-semibold text-white;
   }
 
   .sh-painel__linha {
-    @apply text-sm text-zinc-400;
+    @apply text-xs text-zinc-400;
   }
 
   .sh-painel__destaque {
     @apply text-lg font-bold text-[#0066cc];
   }
 
-  .sh-secao-header {
-    @apply mb-2 flex items-center gap-2 px-1;
+  .sh-sugestao-btn {
+    @apply flex w-full items-center justify-center gap-2 rounded-md border border-zinc-800 bg-zinc-900 px-3 py-2 text-xs font-medium text-zinc-300 transition hover:border-[#0066cc] hover:text-white;
   }
 
   .sh-secao-header__titulo {
-    @apply text-xs font-bold uppercase tracking-wider text-white;
+    @apply mb-2 px-1 text-xs font-semibold uppercase tracking-wider text-zinc-400;
   }
 
   .sh-lista {
@@ -511,7 +503,7 @@
   }
 
   .sala-card--ocupada {
-    @apply border-zinc-800/80 bg-zinc-950/60 opacity-80;
+    @apply border-zinc-800/80 bg-zinc-950/60 opacity-85;
   }
 
   .sala-card__topo {
@@ -544,5 +536,49 @@
 
   .sala-card__ocupada {
     @apply w-full rounded-md border border-zinc-800 bg-zinc-900 py-2 text-center text-sm font-medium text-zinc-400;
+  }
+
+  .sala-card__fila {
+    @apply flex w-full items-center justify-center gap-2 rounded-md border border-zinc-800 bg-zinc-900 py-2 text-center text-xs font-medium text-zinc-300 transition hover:border-zinc-700 hover:bg-zinc-800 hover:text-white;
+  }
+
+  .sala-card__fila--ativa {
+    @apply border-[#0066cc]/60 bg-[#0066cc]/10 font-semibold text-white;
+  }
+
+  .participantes-box {
+    @apply rounded-md border border-zinc-800 bg-zinc-950 p-3 text-left;
+  }
+
+  .participantes-input {
+    @apply min-w-0 flex-1 rounded-md border border-zinc-700 bg-zinc-900 px-3 py-2 text-xs text-white outline-none placeholder:text-zinc-500 focus:border-[#0066cc];
+  }
+
+  .participantes-add-btn {
+    @apply shrink-0 rounded-md border border-zinc-700 bg-zinc-900 px-3 py-2 text-xs font-semibold text-white transition hover:border-[#0066cc] hover:bg-zinc-800;
+  }
+
+  .participantes-chip {
+    @apply inline-flex items-center gap-1.5 rounded border border-zinc-800 bg-zinc-900 px-2.5 py-1 text-xs font-medium text-zinc-200;
+  }
+
+  .checkin-card {
+    @apply rounded-lg border border-zinc-800 bg-zinc-950 p-5 text-center;
+  }
+
+  .checkin-qr-frame {
+    @apply mx-auto mt-4 flex w-fit items-center justify-center rounded-lg border border-zinc-700 bg-white p-3 shadow-sm;
+  }
+
+  .checkin-timer {
+    @apply mt-1 font-mono text-2xl font-extrabold tracking-wider tabular-nums;
+  }
+
+  .checkin-confirm-btn {
+    @apply w-full rounded-md bg-[#0066cc] py-2.5 text-sm font-semibold text-white transition hover:bg-[#0055b8];
+  }
+
+  .checkin-cancel-btn {
+    @apply w-full rounded-md border border-zinc-700 bg-zinc-900 py-2.5 text-sm font-semibold text-zinc-200 transition hover:border-zinc-600 hover:bg-zinc-800 hover:text-white;
   }
 }

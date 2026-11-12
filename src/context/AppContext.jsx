@@ -5,6 +5,7 @@ import { fmtHora, toMin } from '../utils.js'
 const DURACAO_PADRAO_MIN = 90
 const FECHAMENTO_MIN = 22 * 60 + 30
 export const LIMITE_EXTRA_MIN = 30
+export const TOLERANCIA_CHECKIN_MIN = 10
 
 const AppContext = createContext(null)
 export const useApp = () => useContext(AppContext)
@@ -19,21 +20,30 @@ export function AppProvider({ children }) {
   const [filtroAplicado, setFiltroAplicado] = useState(null)
   const [salaSelecionada, setSalaSelecionada] = useState(null)
   const [reserva, setReserva] = useState(null)
+  const [filaEspera, setFilaEspera] = useState([])
   const [toast, setToast] = useState(null)
   const [agora, setAgora] = useState(Date.now())
 
   const notificar = (mensagem, tipo = 'sucesso') => setToast({ mensagem, tipo })
 
-  // Relógio global: atualiza contagens e libera salas (liberarSala) cujo término previsto já passou
+  // Relógio global: atualiza contagens, libera salas cujo término previsto passou e notifica fila de espera
   useEffect(() => {
     const t = setInterval(() => {
       const n = Date.now()
       setAgora(n)
-      setSalas((ss) =>
-        ss.some((s) => s.liberaEm <= n)
-          ? ss.map((s) => (s.liberaEm <= n ? s.liberarSala() : s))
-          : ss,
-      )
+      setSalas((ss) => {
+        const liberadas = ss.filter((s) => !s.status && s.liberaEm && s.liberaEm <= n)
+        if (liberadas.length === 0) return ss
+        const numsLiberados = liberadas.map((s) => s.numero)
+        setFilaEspera((fila) => {
+          const naFila = fila.filter((num) => numsLiberados.includes(num))
+          if (naFila.length > 0) {
+            notificar(`A Sala ${naFila.join(', ')} que você aguardava na fila acaba de ficar disponível!`)
+          }
+          return fila.filter((num) => !numsLiberados.includes(num))
+        })
+        return ss.map((s) => (s.liberaEm <= n ? s.liberarSala() : s))
+      })
     }, 5000)
     return () => clearInterval(t)
   }, [])
@@ -66,6 +76,25 @@ export function AppProvider({ children }) {
   const limparFiltro = () => {
     setFiltro(FILTRO_INICIAL)
     setFiltroAplicado(null)
+  }
+
+  const aplicarSugestaoHorario = (entrada = '08:00', saida = '10:00') => {
+    const novoFiltro = { ...filtro, horarioEntrada: entrada, horarioSaida: saida }
+    setFiltro(novoFiltro)
+    setFiltroAplicado(novoFiltro)
+    notificar(`Sugestão aplicada: janela livre (${entrada} - ${saida}).`)
+  }
+
+  const alternarFilaEspera = (salaAlvo) => {
+    const num = typeof salaAlvo === 'number' ? salaAlvo : salaAlvo?.numero
+    if (!num) return
+    if (filaEspera.includes(num)) {
+      setFilaEspera((f) => f.filter((n) => n !== num))
+      notificar(`Aviso da Sala ${num} cancelado.`)
+    } else {
+      setFilaEspera((f) => [...f, num])
+      notificar(`Aviso ativado! Você será notificado assim que a Sala ${num} liberar.`)
+    }
   }
 
   const salasFiltradas = useMemo(() => {
@@ -118,18 +147,34 @@ export function AppProvider({ children }) {
   }
 
   // SistemaReserva.reservarSala(usuario, sala)
-  const reservarSala = (usuarioAlvo = usuarioState, salaAlvo = salaSelecionada) => {
+  const reservarSala = (usuarioAlvo = usuarioState, salaAlvo = salaSelecionada, participantes = []) => {
     if (!salaAlvo || usuarioAlvo?.pendencia) return
     const { horarioEntrada, horarioSaida, minutos } = calcularPermanencia()
     const endsAt = Date.now() + minutos * 60000
+    const checkinExpiresAt = Date.now() + TOLERANCIA_CHECKIN_MIN * 60000
     const numero = salaAlvo.numero
-    setReserva({ salaNumero: numero, horarioEntrada, horarioSaida, extraTotal: 0, endsAt })
+    setReserva({
+      salaNumero: numero,
+      horarioEntrada,
+      horarioSaida,
+      extraTotal: 0,
+      endsAt,
+      statusCheckin: 'pendente',
+      checkinExpiresAt,
+      participantes,
+    })
     setUsuario((u) => ({ ...u, reserva: true }))
     setSalas((ss) =>
       ss.map((s) => (s.numero === numero ? s.marcarReservado(horarioEntrada, horarioSaida, endsAt) : s)),
     )
-    notificar(`Reserva da Sala ${numero} confirmada!`)
+    notificar(`Reserva da Sala ${numero} confirmada! Realize o check-in presencial em até 10 min.`)
     setPagina('reserva')
+  }
+
+  const confirmarCheckin = () => {
+    if (!reserva) return
+    setReserva((r) => (r ? { ...r, statusCheckin: 'confirmado', checkinExpiresAt: null } : r))
+    notificar('Check-in presencial confirmado com sucesso!')
   }
 
   // SistemaReserva.aumentarTempoReserva(sala, minutos)
@@ -154,7 +199,7 @@ export function AppProvider({ children }) {
   }
 
   // SistemaReserva.devolverSala(sala)
-  const devolverSala = (salaAlvo, automatico = false) => {
+  const devolverSala = (salaAlvo, automatico = false, motivoCustom = '') => {
     if (!reserva) return
     const numero = salaAlvo?.numero ?? reserva.salaNumero
     const salaAtual = salas.find((s) => s.numero === numero)
@@ -162,7 +207,11 @@ export function AppProvider({ children }) {
     setUsuario((u) => ({ ...u, reserva: false }))
     setReserva(null)
     setSalaSelecionada(null)
-    notificar(automatico ? `Tempo esgotado. ${salaAtual?.nome} devolvida.` : `${salaAtual?.nome} devolvida com sucesso!`)
+    notificar(
+      motivoCustom ||
+        (automatico ? `Tempo esgotado. ${salaAtual?.nome} devolvida.` : `${salaAtual?.nome} devolvida com sucesso!`),
+      automatico ? 'erro' : 'sucesso',
+    )
     setPagina('studyhub')
   }
 
@@ -187,9 +236,10 @@ export function AppProvider({ children }) {
     pagina, setPagina,
     usuario, salas, salasFiltradas, totalLivres, proximaLiberacao,
     filtro, setFiltro, filtroAplicado,
-    filtrarDisponiveis, limparFiltro,
+    filtrarDisponiveis, limparFiltro, aplicarSugestaoHorario,
+    filaEspera, alternarFilaEspera,
     salaSelecionada, consultarSala, calcularPermanencia,
-    reservarSala, aumentarTempoReserva, devolverSala,
+    reservarSala, confirmarCheckin, aumentarTempoReserva, devolverSala,
     liberarSala, marcarReservado,
     reserva,
     toast, notificar, dismissToast: () => setToast(null),

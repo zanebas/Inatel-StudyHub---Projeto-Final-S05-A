@@ -4,7 +4,7 @@ import { Button, Card, PageHeader } from '../components/ui.jsx'
 
 /** Tela 2: filtro de recursos, horário e capacidade (wireframe) */
 export default function Filtro() {
-  const { filtro, setFiltro, filtrarDisponiveis, limparFiltro, setPagina, notificar } = useApp()
+  const { filtro, setFiltro, filtrarDisponiveis, limparFiltro, aplicarSugestaoHorario, setPagina, notificar } = useApp()
   const set = (patch) => setFiltro((f) => ({ ...f, ...patch }))
 
   const verificar = () => {
@@ -12,6 +12,11 @@ export default function Filtro() {
     if (!filtrarDisponiveis(horario, filtro)) return
     setPagina('studyhub')
     notificar('Filtro aplicado! Lista de salas atualizada.')
+  }
+
+  const usarSugestao = () => {
+    aplicarSugestaoHorario('08:00', '10:00')
+    setPagina('studyhub')
   }
 
   const pill = (valor, label) => (
@@ -48,6 +53,15 @@ export default function Filtro() {
             </label>
           ))}
         </div>
+
+        <button
+          type="button"
+          onClick={usarSugestao}
+          className="sh-sugestao-btn mt-3"
+        >
+          <span className="h-1.5 w-1.5 rounded-full bg-[#0066cc]" />
+          Sugestão: Próxima janela livre (08:00 - 10:00)
+        </button>
       </Card>
 
       <Card className="mt-6 p-4">
